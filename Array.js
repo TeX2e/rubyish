@@ -8,15 +8,10 @@
 //
 if (!Array.prototype.all) {
   Array.prototype.all = function (predicate) {
-    if (this == null) throw new TypeError();
-    var array = this;
     if (!predicate) {
-      predicate = function (elem) { return elem; }
+      predicate = function (elem) { return elem; };
     }
-    for (var i = 0; i < array.length; i++) {
-      if (!predicate(array[i])) return false;
-    }
-    return true;
+    return Array.prototype.every.call(this, predicate);
   }
 }
 
@@ -24,19 +19,14 @@ if (!Array.prototype.all) {
 //
 if (!Array.prototype.any) {
   Array.prototype.any = function (predicate) {
-    if (this == null) throw new TypeError();
-    var array = this;
     if (!predicate) {
-      predicate = function (elem) { return elem; }
+      predicate = function (elem) { return elem; };
     }
-    for (var i = 0; i < array.length; i++) {
-      if (predicate(array[i])) return true;
-    }
-    return false;
+    return Array.prototype.some.call(this, predicate);
   }
 }
 
-// Array#assoc(obj) -> element_ary or null
+// Array#assoc(obj) -> element_ary or nil
 //
 if (!Array.prototype.assoc) {
   Array.prototype.assoc = function (obj) {
@@ -55,9 +45,7 @@ if (!Array.prototype.assoc) {
 //
 if (!Array.prototype.at) {
   Array.prototype.at = function (index) {
-    if (this == null) throw new TypeError();
-    var array = this;
-    return array[index];
+    return this[index];
   }
 }
 
@@ -81,8 +69,6 @@ if (!Array.prototype.bsearchIndex) {
 //
 if (!Array.prototype.clear) {
   Array.prototype.clear = function () {
-    if (this == null) throw new TypeError();
-    var array = this;
     this.length = 0;
     return this;
   }
@@ -176,9 +162,7 @@ if (!Array.prototype.dig) {
 //
 if (!Array.prototype.drop) {
   Array.prototype.drop = function (n) {
-    if (this == null) throw new TypeError();
-    var array = this;
-    return array.slice(array.length - n, array.length);
+    return this.slice(this.length - n, this.length);
   };
 }
 
@@ -195,7 +179,7 @@ if (!Array.prototype.dropWhile) {
 //   Alias for Array.prototype.forEach
 //
 if (!Array.prototype.each) {
-  Array.prototype.each = forEach;
+  Array.prototype.each = Array.prototype.forEach;
 }
 
 // Array#each_index { |item| block } -> ary
@@ -255,8 +239,7 @@ if (!Array.prototype.findIndex) {
 //
 if (!Array.prototype.first) {
   Array.prototype.first = function () {
-    var array = this;
-    return array[0];
+    return this[0];
   };
 }
 
@@ -264,8 +247,6 @@ if (!Array.prototype.first) {
 //
 if (!Array.prototype.flatten) {
   Array.prototype.flatten = function () {
-    if (this == null) throw new TypeError();
-    var array = this;
     var flatArray = [];
 
     function pushLoop(ary) {
@@ -279,7 +260,7 @@ if (!Array.prototype.flatten) {
       }
     }
 
-    pushLoop(array);
+    pushLoop(this);
     return flatArray;
   };
 }
@@ -520,10 +501,7 @@ if (!Array.prototype.sortBy) {
 //
 if (!Array.prototype.take) {
   Array.prototype.take = function (n) {
-    if (this == null) throw new TypeError();
-    var array = this;
-    return array.slice(0, n);
-    return array;
+    return this.slice(0, n);
   };
 }
 
