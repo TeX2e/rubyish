@@ -1,6 +1,6 @@
 
 
-// support array.filter(fun)
+// implement array.filter(fun)
 // refer to https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 //
 if (!Array.prototype.filter) {
@@ -26,7 +26,7 @@ if (!Array.prototype.filter) {
   };
 }
 
-// support array.map(fun)
+// implement array.map(fun)
 // refer to https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 //
 // Production steps of ECMA-262, Edition 5, 15.4.4.19
@@ -174,17 +174,18 @@ if (!Array.prototype.bsearchIndex) {
   }
 }
 
-// Array#clear
+// Array#clear -> ary
 //
 if (!Array.prototype.clear) {
   Array.prototype.clear = function () {
     if (this == null) throw new TypeError();
     var array = this;
     this.length = 0;
+    return this;
   }
 }
 
-// Array#collect
+// Array#collect { |item| block } -> new_ary
 //
 // requires
 // * Array.prototype.map()
@@ -193,86 +194,522 @@ if (!Array.prototype.collect) {
   Array.prototype.collect = Array.prototype.map;
 }
 
-// Array#aaaaa
+// Array#combination(n)
 //
-if (!Array.prototype.aaaaa) {
-  Array.prototype.aaaaa = function () {
+if (!Array.prototype.combination) {
+  Array.prototype.combination = function () {
     //
   }
 }
 
-// Array#aaaaa
+// Array#compact
 //
-if (!Array.prototype.aaaaa) {
-  Array.prototype.aaaaa = function () {
+if (!Array.prototype.compact) {
+  Array.prototype.compact = function () {
     //
-  }
+  };
 }
 
+// Array#concat
+//
+if (!Array.prototype.concat) {
+  Array.prototype.concat = function () {
+    //
+  };
+}
 
-// Array.prototype.combination
-// Array.prototype.compact
-// Array.prototype.concat
-// Array.prototype.count
-// Array.prototype.cycle
-// Array.prototype.delete
-// Array.prototype.delete_at
-// Array.prototype.delete_if
-// Array.prototype.dig
-// Array.prototype.drop
-// Array.prototype.drop_while
-// Array.prototype.each
-// Array.prototype.each_index
-// Array.prototype.empty?
-// Array.prototype.eql?
-// Array.prototype.fetch
-// Array.prototype.fill
-// Array.prototype.find_index
-// Array.prototype.first
-// Array.prototype.flatten
-// Array.prototype.frozen?
-// Array.prototype.hash
-// Array.prototype.include?
-// Array.prototype.index
-// Array.prototype.initialize_copy
-// Array.prototype.insert
-// Array.prototype.inspect
-// Array.prototype.join
-// Array.prototype.keep_if
-// Array.prototype.last
-// Array.prototype.length
-// Array.prototype.map
-// Array.prototype.pack
-// Array.prototype.permutation
-// Array.prototype.pop
-// Array.prototype.product
-// Array.prototype.push
-// Array.prototype.rassoc
-// Array.prototype.reject
-// Array.prototype.repeated_combination
-// Array.prototype.repeated_permutation
-// Array.prototype.replace
-// Array.prototype.reverse
-// Array.prototype.reverse_each
-// Array.prototype.rindex
-// Array.prototype.rotate
-// Array.prototype.sample
-// Array.prototype.select
-// Array.prototype.shift
-// Array.prototype.shuffle
-// Array.prototype.size
-// Array.prototype.slice
-// Array.prototype.sort
-// Array.prototype.sort_by
-// Array.prototype.take
-// Array.prototype.take_while
-// Array.prototype.to_a
-// Array.prototype.to_ary
-// Array.prototype.to_h
-// Array.prototype.to_s
-// Array.prototype.transpose
-// Array.prototype.uniq
-// Array.prototype.uniq!
-// Array.prototype.unshift
-// Array.prototype.values_at
-// Array.prototype.zip
+// Array#count
+//
+if (!Array.prototype.count) {
+  Array.prototype.count = function () {
+    //
+  };
+}
+
+// Array#cycle
+//
+if (!Array.prototype.cycle) {
+  Array.prototype.cycle = function () {
+    //
+  };
+}
+
+// Array#delete
+//
+if (!Array.prototype.delete) {
+  Array.prototype.delete = function () {
+    //
+  };
+}
+
+// Array#delete_at
+//
+if (!Array.prototype.delete_at) {
+  Array.prototype.delete_at = function () {
+    //
+  };
+}
+
+// Array#delete_if
+//
+if (!Array.prototype.delete_if) {
+  Array.prototype.delete_if = function () {
+    //
+  };
+}
+
+// Array#dig
+//
+if (!Array.prototype.dig) {
+  Array.prototype.dig = function () {
+    //
+  };
+}
+
+// Array#drop
+//
+if (!Array.prototype.drop) {
+  Array.prototype.drop = function () {
+    //
+  };
+}
+
+// Array#drop_while
+//
+if (!Array.prototype.drop_while) {
+  Array.prototype.drop_while = function () {
+    //
+  };
+}
+
+// Array#each
+//
+if (!Array.prototype.each) {
+  Array.prototype.each = function () {
+    //
+  };
+}
+
+// Array#each_index
+//
+if (!Array.prototype.each_index) {
+  Array.prototype.each_index = function () {
+    //
+  };
+}
+
+// Array#empty?
+//
+if (!Array.prototype.empty?) {
+  Array.prototype.empty? = function () {
+    //
+  };
+}
+
+// Array#eql?
+//
+if (!Array.prototype.eql?) {
+  Array.prototype.eql? = function () {
+    //
+  };
+}
+
+// Array#fetch
+//
+if (!Array.prototype.fetch) {
+  Array.prototype.fetch = function () {
+    //
+  };
+}
+
+// Array#fill
+//
+if (!Array.prototype.fill) {
+  Array.prototype.fill = function () {
+    //
+  };
+}
+
+// Array#find_index
+//
+if (!Array.prototype.find_index) {
+  Array.prototype.find_index = function () {
+    //
+  };
+}
+
+// Array#first
+//
+if (!Array.prototype.first) {
+  Array.prototype.first = function () {
+    //
+  };
+}
+
+// Array#flatten
+//
+if (!Array.prototype.flatten) {
+  Array.prototype.flatten = function () {
+    //
+  };
+}
+
+// Array#frozen?
+//
+if (!Array.prototype.frozen?) {
+  Array.prototype.frozen? = function () {
+    //
+  };
+}
+
+// Array#hash
+//
+if (!Array.prototype.hash) {
+  Array.prototype.hash = function () {
+    //
+  };
+}
+
+// Array#include?
+//
+if (!Array.prototype.include?) {
+  Array.prototype.include? = function () {
+    //
+  };
+}
+
+// Array#index
+//
+if (!Array.prototype.index) {
+  Array.prototype.index = function () {
+    //
+  };
+}
+
+// Array#initialize_copy
+//
+if (!Array.prototype.initialize_copy) {
+  Array.prototype.initialize_copy = function () {
+    //
+  };
+}
+
+// Array#insert
+//
+if (!Array.prototype.insert) {
+  Array.prototype.insert = function () {
+    //
+  };
+}
+
+// Array#inspect
+//
+if (!Array.prototype.inspect) {
+  Array.prototype.inspect = function () {
+    //
+  };
+}
+
+// Array#join
+//
+if (!Array.prototype.join) {
+  Array.prototype.join = function () {
+    //
+  };
+}
+
+// Array#keep_if
+//
+if (!Array.prototype.keep_if) {
+  Array.prototype.keep_if = function () {
+    //
+  };
+}
+
+// Array#last
+//
+if (!Array.prototype.last) {
+  Array.prototype.last = function () {
+    //
+  };
+}
+
+// Array#length
+//
+if (!Array.prototype.length) {
+  Array.prototype.length = function () {
+    //
+  };
+}
+
+// Array#map
+//
+if (!Array.prototype.map) {
+  Array.prototype.map = function () {
+    //
+  };
+}
+
+// Array#pack
+//
+if (!Array.prototype.pack) {
+  Array.prototype.pack = function () {
+    //
+  };
+}
+
+// Array#permutation
+//
+if (!Array.prototype.permutation) {
+  Array.prototype.permutation = function () {
+    //
+  };
+}
+
+// Array#pop
+//
+if (!Array.prototype.pop) {
+  Array.prototype.pop = function () {
+    //
+  };
+}
+
+// Array#product
+//
+if (!Array.prototype.product) {
+  Array.prototype.product = function () {
+    //
+  };
+}
+
+// Array#push
+//
+if (!Array.prototype.push) {
+  Array.prototype.push = function () {
+    //
+  };
+}
+
+// Array#rassoc
+//
+if (!Array.prototype.rassoc) {
+  Array.prototype.rassoc = function () {
+    //
+  };
+}
+
+// Array#reject
+//
+if (!Array.prototype.reject) {
+  Array.prototype.reject = function () {
+    //
+  };
+}
+
+// Array#repeated_combination
+//
+if (!Array.prototype.repeated_combination) {
+  Array.prototype.repeated_combination = function () {
+    //
+  };
+}
+
+// Array#repeated_permutation
+//
+if (!Array.prototype.repeated_permutation) {
+  Array.prototype.repeated_permutation = function () {
+    //
+  };
+}
+
+// Array#replace
+//
+if (!Array.prototype.replace) {
+  Array.prototype.replace = function () {
+    //
+  };
+}
+
+// Array#reverse
+//
+if (!Array.prototype.reverse) {
+  Array.prototype.reverse = function () {
+    //
+  };
+}
+
+// Array#reverse_each
+//
+if (!Array.prototype.reverse_each) {
+  Array.prototype.reverse_each = function () {
+    //
+  };
+}
+
+// Array#rindex
+//
+if (!Array.prototype.rindex) {
+  Array.prototype.rindex = function () {
+    //
+  };
+}
+
+// Array#rotate
+//
+if (!Array.prototype.rotate) {
+  Array.prototype.rotate = function () {
+    //
+  };
+}
+
+// Array#sample
+//
+if (!Array.prototype.sample) {
+  Array.prototype.sample = function () {
+    //
+  };
+}
+
+// Array#select
+//
+if (!Array.prototype.select) {
+  Array.prototype.select = function () {
+    //
+  };
+}
+
+// Array#shift
+//
+if (!Array.prototype.shift) {
+  Array.prototype.shift = function () {
+    //
+  };
+}
+
+// Array#shuffle
+//
+if (!Array.prototype.shuffle) {
+  Array.prototype.shuffle = function () {
+    //
+  };
+}
+
+// Array#size
+//
+if (!Array.prototype.size) {
+  Array.prototype.size = function () {
+    //
+  };
+}
+
+// Array#slice
+//
+if (!Array.prototype.slice) {
+  Array.prototype.slice = function () {
+    //
+  };
+}
+
+// Array#sort
+//
+if (!Array.prototype.sort) {
+  Array.prototype.sort = function () {
+    //
+  };
+}
+
+// Array#sort_by
+//
+if (!Array.prototype.sort_by) {
+  Array.prototype.sort_by = function () {
+    //
+  };
+}
+
+// Array#take
+//
+if (!Array.prototype.take) {
+  Array.prototype.take = function () {
+    //
+  };
+}
+
+// Array#take_while
+//
+if (!Array.prototype.take_while) {
+  Array.prototype.take_while = function () {
+    //
+  };
+}
+
+// Array#to_a
+//
+if (!Array.prototype.to_a) {
+  Array.prototype.to_a = function () {
+    //
+  };
+}
+
+// Array#to_ary
+//
+if (!Array.prototype.to_ary) {
+  Array.prototype.to_ary = function () {
+    //
+  };
+}
+
+// Array#to_h
+//
+if (!Array.prototype.to_h) {
+  Array.prototype.to_h = function () {
+    //
+  };
+}
+
+// Array#to_s
+//
+if (!Array.prototype.to_s) {
+  Array.prototype.to_s = function () {
+    //
+  };
+}
+
+// Array#transpose
+//
+if (!Array.prototype.transpose) {
+  Array.prototype.transpose = function () {
+    //
+  };
+}
+
+// Array#uniq
+//
+if (!Array.prototype.uniq) {
+  Array.prototype.uniq = function () {
+    //
+  };
+}
+
+// Array#unshift
+//
+if (!Array.prototype.unshift) {
+  Array.prototype.unshift = function () {
+    //
+  };
+}
+
+// Array#values_at
+//
+if (!Array.prototype.values_at) {
+  Array.prototype.values_at = function () {
+    //
+  };
+}
+
+// Array#zip
+//
+if (!Array.prototype.zip) {
+  Array.prototype.zip = function () {
+    //
+  };
+}
