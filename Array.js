@@ -83,7 +83,33 @@ if (!Array.prototype.at) {
   }
 }
 
-// Array#
+// Array#bsearch { |x| block } -> elem
+//
+if (!Array.prototype.bsearch) {
+  Array.prototype.bsearch = function () {
+    //
+  }
+}
+
+// Array#bsearchIndex
+//
+if (!Array.prototype.bsearchIndex) {
+  Array.prototype.bsearchIndex = function () {
+    //
+  }
+}
+
+// Array#clear
+//
+if (!Array.prototype.clear) {
+  Array.prototype.clear = function () {
+    if (this == null) throw new TypeError();
+    var array = this;
+    this.length = 0;
+  }
+}
+
+// Array#aaaaa
 //
 if (!Array.prototype.aaaaa) {
   Array.prototype.aaaaa = function () {
@@ -91,7 +117,7 @@ if (!Array.prototype.aaaaa) {
   }
 }
 
-// Array#
+// Array#aaaaa
 //
 if (!Array.prototype.aaaaa) {
   Array.prototype.aaaaa = function () {
@@ -99,7 +125,7 @@ if (!Array.prototype.aaaaa) {
   }
 }
 
-// Array#
+// Array#aaaaa
 //
 if (!Array.prototype.aaaaa) {
   Array.prototype.aaaaa = function () {
@@ -107,9 +133,7 @@ if (!Array.prototype.aaaaa) {
   }
 }
 
-// Array.prototype.bsearch
-// Array.prototype.bsearch_index
-// Array.prototype.clear
+
 // Array.prototype.collect
 // Array.prototype.combination
 // Array.prototype.compact
