@@ -73,8 +73,40 @@ if (!Array.prototype.assoc) {
   }
 }
 
+// Array#at(index) -> obj or nil
+//
+if (!Array.prototype.at) {
+  Array.prototype.at = function (index) {
+    if (this == null) throw new TypeError();
+    var array = this;
+    return array[index];
+  }
+}
 
-// Array.prototype.at
+// Array#
+//
+if (!Array.prototype.aaaaa) {
+  Array.prototype.aaaaa = function () {
+    //
+  }
+}
+
+// Array#
+//
+if (!Array.prototype.aaaaa) {
+  Array.prototype.aaaaa = function () {
+    //
+  }
+}
+
+// Array#
+//
+if (!Array.prototype.aaaaa) {
+  Array.prototype.aaaaa = function () {
+    //
+  }
+}
+
 // Array.prototype.bsearch
 // Array.prototype.bsearch_index
 // Array.prototype.clear
