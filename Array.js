@@ -1,4 +1,7 @@
 
+// Array
+// Enumerable
+
 // requires
 // * JavaScript >= ES5
 
@@ -182,6 +185,23 @@ if (!Array.prototype.each) {
   Array.prototype.each = Array.prototype.forEach;
 }
 
+// Array#each_cons(n) { |item| block } -> nil
+//
+if (!Array.prototype.eachCons) {
+  Array.prototype.eachCons = function () {
+    //
+  };
+}
+
+// Array#each_entry { |item| block } -> enum
+// ??
+//
+if (!Array.prototype.eachEntry) {
+  Array.prototype.eachEntry = function () {
+    //
+  };
+}
+
 // Array#each_index { |item| block } -> ary
 //
 if (!Array.prototype.eachIndex) {
@@ -189,6 +209,20 @@ if (!Array.prototype.eachIndex) {
     //
   };
 }
+
+// Array#each_slice(n) { |item| block } -> enum
+//
+if (!Array.prototype.eachSlice) {
+  Array.prototype.eachSlice = function () {
+    //
+  };
+}
+
+// Array#each_with_index { |obj, i| block }
+//
+
+// Array#each_with_object { |(*args), memo| block }
+//
 
 // Array#empty? -> true or false
 //
@@ -225,6 +259,11 @@ if (!Array.prototype.fill) {
   };
 }
 
+// Array#find_all { |obj| block } -> array
+//
+//   Alias for #select
+//   See also #reject
+
 // Array#find_index(obj) -> int or nil
 // Array#find_index { |item| block } -> int or nil
 //
@@ -240,6 +279,14 @@ if (!Array.prototype.findIndex) {
 if (!Array.prototype.first) {
   Array.prototype.first = function () {
     return this[0];
+  };
+}
+
+// Array#flat_map { |obj| block } -> array
+//
+if (!Array.prototype.flatMap) {
+  Array.prototype.flatMap = function () {
+    //
   };
 }
 
@@ -265,9 +312,33 @@ if (!Array.prototype.flatten) {
   };
 }
 
-// Array#frozen?
+// Array#frozen? -> true or false
 //
 // (not needed)
+
+// Array#grep(pattern) -> array
+//
+if (!Array.prototype.grep) {
+  Array.prototype.grep = function () {
+    //
+  };
+}
+
+// Array#grep_v(pattern) -> array
+//
+if (!Array.prototype.grepV) {
+  Array.prototype.grepV = function () {
+    //
+  };
+}
+
+// Array#group_by { |obj| block } -> hash
+//
+if (!Array.prototype.groupBy) {
+  Array.prototype.groupBy = function () {
+    //
+  };
+}
 
 // Array#hash
 //
@@ -277,6 +348,14 @@ if (!Array.prototype.flatten) {
 //
 if (!Array.prototype.include) {
   Array.prototype.include = function () {
+    //
+  };
+}
+
+// Array#inject(initial) { |memo, obj| block } -> obj
+//
+if (!Array.prototype.inject) {
+  Array.prototype.inject = function () {
     //
   };
 }
@@ -331,6 +410,10 @@ if (!Array.prototype.last) {
   };
 }
 
+// Array#lazy -> lazy_enumerator
+//
+// (cannot implement)
+
 // Array#length -> int
 //
 // (already implemented)
@@ -339,9 +422,50 @@ if (!Array.prototype.last) {
 //
 // (already implemented)
 
+// Array#max -> obj
+// Array#max { |a, b| block } -> obj
+// Array#max(n) -> obj
+// Array#max(n) { |a, b| block } -> obj
+//
+
+// Array#max_by { |a, b| block } -> obj
+// Array#max_by(n) { |a, b| block } -> obj
+//
+
+// Array#member?(obj) -> true or false
+//
+//   Alias for #include?
+//
+
+// Array#min -> obj
+// Array#min { |a, b| block } -> obj
+// Array#min(n) -> obj
+// Array#min(n) { |a, b| block } -> obj
+//
+
+// Array#min_by { |a, b| block } -> obj
+// Array#min_by(n) { |a, b| block } -> obj
+//
+
+// Array#minmax -> [min, max]
+// Array#minmax { |a, b| block } -> [min, max]
+//
+
+// Array#minmax_by { |a, b| block } -> [min, max]
+//
+
 // Array#pack(aTemplateString) -> aBinaryString
 //
 // (not needed)
+
+// Array#none? [{ |obj| block }] -> true or false
+//
+
+// Array#one? [{ |obj| block }] -> true or false
+//
+
+// Array#partition { |obj| block } -> [true_array, false_array]
+//
 
 // Array#permutation(n) -> ary
 //
@@ -374,6 +498,11 @@ if (!Array.prototype.rassoc) {
     //
   };
 }
+
+// Array#reduce(initial) { |memo, obj| block } -> obj
+//
+//   Alias for #inject
+//
 
 // Array#reject { |item| block } -> new_ary
 //
@@ -483,6 +612,17 @@ if (!Array.prototype.size) {
 //   JavaScript implementation is Array#slice(start, end)
 //   but,  Ruby implementation is Array#slice(start, length)
 //   therefore decided to not override JS implementation with Ruby one.
+//
+
+// Array#slice_after(pattern) -> array
+// Array#slice_after { |elt| bool } -> array
+//
+
+// Array#slice_before(pattern) -> array
+// Array#slice_before { |elt| bool } -> array
+//
+
+// Array#slice_when { |elt_before, elt_after| bool } -> array
 //
 
 // Array#sort -> new_ary
