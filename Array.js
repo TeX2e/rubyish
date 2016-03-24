@@ -166,7 +166,7 @@ if (!Array.prototype.bsearch) {
   }
 }
 
-// Array#bsearchIndex
+// Array#bsearch_index
 //
 if (!Array.prototype.bsearchIndex) {
   Array.prototype.bsearchIndex = function () {
@@ -187,6 +187,8 @@ if (!Array.prototype.clear) {
 
 // Array#collect { |item| block } -> new_ary
 //
+// See also #map
+//
 // requires
 // * Array.prototype.map()
 //
@@ -194,7 +196,7 @@ if (!Array.prototype.collect) {
   Array.prototype.collect = Array.prototype.map;
 }
 
-// Array#combination(n)
+// Array#combination(n) -> ary
 //
 if (!Array.prototype.combination) {
   Array.prototype.combination = function () {
@@ -202,7 +204,7 @@ if (!Array.prototype.combination) {
   }
 }
 
-// Array#compact
+// Array#compact -> new_ary
 //
 if (!Array.prototype.compact) {
   Array.prototype.compact = function () {
@@ -210,7 +212,7 @@ if (!Array.prototype.compact) {
   };
 }
 
-// Array#concat
+// Array#concat -> ary
 //
 if (!Array.prototype.concat) {
   Array.prototype.concat = function () {
@@ -218,7 +220,9 @@ if (!Array.prototype.concat) {
   };
 }
 
-// Array#count
+// Array#count -> int
+// Array#count(obj) -> int
+// Array#count { |item| block } -> int
 //
 if (!Array.prototype.count) {
   Array.prototype.count = function () {
@@ -226,7 +230,7 @@ if (!Array.prototype.count) {
   };
 }
 
-// Array#cycle
+// Array#cycle(n=nil) { |obj| block }
 //
 if (!Array.prototype.cycle) {
   Array.prototype.cycle = function () {
@@ -234,7 +238,8 @@ if (!Array.prototype.cycle) {
   };
 }
 
-// Array#delete
+// Array#delete(obj) -> item or nil
+// Array#delete(obj) { block } -> item or result of block
 //
 if (!Array.prototype.delete) {
   Array.prototype.delete = function () {
@@ -242,23 +247,23 @@ if (!Array.prototype.delete) {
   };
 }
 
-// Array#delete_at
+// Array#delete_at(index) -> obj or nil
 //
-if (!Array.prototype.delete_at) {
-  Array.prototype.delete_at = function () {
+if (!Array.prototype.deleteAt) {
+  Array.prototype.deleteAt = function () {
     //
   };
 }
 
-// Array#delete_if
+// Array#delete_if { |item| block } -> ary
 //
-if (!Array.prototype.delete_if) {
-  Array.prototype.delete_if = function () {
+if (!Array.prototype.deleteIf) {
+  Array.prototype.deleteIf = function () {
     //
   };
 }
 
-// Array#dig
+// Array#dig(idx, ...) -> obj
 //
 if (!Array.prototype.dig) {
   Array.prototype.dig = function () {
@@ -266,7 +271,9 @@ if (!Array.prototype.dig) {
   };
 }
 
-// Array#drop
+// Array#drop(n) -> new_ary
+//
+// See also #take
 //
 if (!Array.prototype.drop) {
   Array.prototype.drop = function () {
@@ -274,15 +281,15 @@ if (!Array.prototype.drop) {
   };
 }
 
-// Array#drop_while
+// Array#drop_while(n) -> new_ary
 //
-if (!Array.prototype.drop_while) {
-  Array.prototype.drop_while = function () {
+if (!Array.prototype.dropWhile) {
+  Array.prototype.dropWhile = function () {
     //
   };
 }
 
-// Array#each
+// Array#each { |item| block } -> ary
 //
 if (!Array.prototype.each) {
   Array.prototype.each = function () {
@@ -290,31 +297,33 @@ if (!Array.prototype.each) {
   };
 }
 
-// Array#each_index
+// Array#each_index { |item| block } -> ary
 //
-if (!Array.prototype.each_index) {
-  Array.prototype.each_index = function () {
+if (!Array.prototype.eachIndex) {
+  Array.prototype.eachIndex = function () {
     //
   };
 }
 
-// Array#empty?
+// Array#empty? -> true or false
 //
-if (!Array.prototype.empty?) {
-  Array.prototype.empty? = function () {
+if (!Array.prototype.empty) {
+  Array.prototype.empty = function () {
     //
   };
 }
 
-// Array#eql?
+// Array#eql -> true or false
 //
-if (!Array.prototype.eql?) {
-  Array.prototype.eql? = function () {
+if (!Array.prototype.eql) {
+  Array.prototype.eql = function () {
     //
   };
 }
 
-// Array#fetch
+// Array#fetch(index) -> obj
+// Array#fetch(index, default) -> obj
+// Array#fetch(index) { |index| block } -> obj
 //
 if (!Array.prototype.fetch) {
   Array.prototype.fetch = function () {
@@ -322,7 +331,8 @@ if (!Array.prototype.fetch) {
   };
 }
 
-// Array#fill
+// Array#fill(obj) -> ary
+// Array#fill { |index| block } -> ary
 //
 if (!Array.prototype.fill) {
   Array.prototype.fill = function () {
@@ -330,15 +340,17 @@ if (!Array.prototype.fill) {
   };
 }
 
-// Array#find_index
+// Array#find_index(obj) -> int or nil
+// Array#find_index { |item| block } -> int or nil
 //
-if (!Array.prototype.find_index) {
-  Array.prototype.find_index = function () {
+if (!Array.prototype.findIndex) {
+  Array.prototype.findIndex = function () {
     //
   };
 }
 
-// Array#first
+// Array#first() -> obj or nil
+// Array#first(n) -> new_ary
 //
 if (!Array.prototype.first) {
   Array.prototype.first = function () {
@@ -346,18 +358,34 @@ if (!Array.prototype.first) {
   };
 }
 
-// Array#flatten
+// Array#flatten -> new_ary
 //
 if (!Array.prototype.flatten) {
   Array.prototype.flatten = function () {
-    //
+    if (this == null) throw new TypeError();
+    var array = this;
+    var flatArray = [];
+
+    function pushLoop(ary) {
+      var i=0;
+      for (i; i < ary.length; i++) {
+        if (ary[i] && ary[i].constructor == Array) {
+          pushLoop(ary[i]);
+        } else {
+          flatArray.push(ary[i]);
+        }
+      }
+    }
+
+    pushLoop(array);
+    return flatArray;
   };
 }
 
 // Array#frozen?
 //
-if (!Array.prototype.frozen?) {
-  Array.prototype.frozen? = function () {
+if (!Array.prototype.frozen) {
+  Array.prototype.frozen = function () {
     //
   };
 }
@@ -370,10 +398,10 @@ if (!Array.prototype.hash) {
   };
 }
 
-// Array#include?
+// Array#include
 //
-if (!Array.prototype.include?) {
-  Array.prototype.include? = function () {
+if (!Array.prototype.include) {
+  Array.prototype.include = function () {
     //
   };
 }
@@ -388,8 +416,8 @@ if (!Array.prototype.index) {
 
 // Array#initialize_copy
 //
-if (!Array.prototype.initialize_copy) {
-  Array.prototype.initialize_copy = function () {
+if (!Array.prototype.initializeCopy) {
+  Array.prototype.initializeCopy = function () {
     //
   };
 }
@@ -420,8 +448,8 @@ if (!Array.prototype.join) {
 
 // Array#keep_if
 //
-if (!Array.prototype.keep_if) {
-  Array.prototype.keep_if = function () {
+if (!Array.prototype.keepIf) {
+  Array.prototype.keepIf = function () {
     //
   };
 }
@@ -434,13 +462,13 @@ if (!Array.prototype.last) {
   };
 }
 
-// Array#length
-//
-if (!Array.prototype.length) {
-  Array.prototype.length = function () {
-    //
-  };
-}
+// // Array#length
+// //
+// if (!Array.prototype.length) {
+//   Array.prototype.length = function () {
+//     //
+//   };
+// }
 
 // Array#map
 //
@@ -466,13 +494,13 @@ if (!Array.prototype.permutation) {
   };
 }
 
-// Array#pop
-//
-if (!Array.prototype.pop) {
-  Array.prototype.pop = function () {
-    //
-  };
-}
+// // Array#pop
+// //
+// if (!Array.prototype.pop) {
+//   Array.prototype.pop = function () {
+//     //
+//   };
+// }
 
 // Array#product
 //
@@ -482,13 +510,13 @@ if (!Array.prototype.product) {
   };
 }
 
-// Array#push
-//
-if (!Array.prototype.push) {
-  Array.prototype.push = function () {
-    //
-  };
-}
+// // Array#push
+// //
+// if (!Array.prototype.push) {
+//   Array.prototype.push = function () {
+//     //
+//   };
+// }
 
 // Array#rassoc
 //
@@ -540,8 +568,8 @@ if (!Array.prototype.reverse) {
 
 // Array#reverse_each
 //
-if (!Array.prototype.reverse_each) {
-  Array.prototype.reverse_each = function () {
+if (!Array.prototype.reverseEach) {
+  Array.prototype.reverseEach = function () {
     //
   };
 }
@@ -620,8 +648,8 @@ if (!Array.prototype.sort) {
 
 // Array#sort_by
 //
-if (!Array.prototype.sort_by) {
-  Array.prototype.sort_by = function () {
+if (!Array.prototype.sortBy) {
+  Array.prototype.sortBy = function () {
     //
   };
 }
@@ -636,40 +664,32 @@ if (!Array.prototype.take) {
 
 // Array#take_while
 //
-if (!Array.prototype.take_while) {
-  Array.prototype.take_while = function () {
+if (!Array.prototype.takeWhile) {
+  Array.prototype.takeWhile = function () {
     //
   };
 }
 
 // Array#to_a
 //
-if (!Array.prototype.to_a) {
-  Array.prototype.to_a = function () {
-    //
-  };
-}
-
-// Array#to_ary
-//
-if (!Array.prototype.to_ary) {
-  Array.prototype.to_ary = function () {
+if (!Array.prototype.toArray) {
+  Array.prototype.toArray = function () {
     //
   };
 }
 
 // Array#to_h
 //
-if (!Array.prototype.to_h) {
-  Array.prototype.to_h = function () {
+if (!Array.prototype.toHash) {
+  Array.prototype.toHash = function () {
     //
   };
 }
 
 // Array#to_s
 //
-if (!Array.prototype.to_s) {
-  Array.prototype.to_s = function () {
+if (!Array.prototype.toString) {
+  Array.prototype.toString = function () {
     //
   };
 }
@@ -700,8 +720,8 @@ if (!Array.prototype.unshift) {
 
 // Array#values_at
 //
-if (!Array.prototype.values_at) {
-  Array.prototype.values_at = function () {
+if (!Array.prototype.valuesAt) {
+  Array.prototype.valuesAt = function () {
     //
   };
 }
