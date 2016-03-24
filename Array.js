@@ -1,136 +1,6 @@
 
-// Polyfill
-
-// implement array.filter(fun)
-// refer to https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-//
-if (!Array.prototype.filter) {
-  Array.prototype.filter = function(fun/*, thisArg*/) {
-    'use strict';
-
-    if (this === void 0 || this === null) {
-      throw new TypeError();
-    }
-
-    var t = Object(this);
-    var len = t.length >>> 0;
-    if (typeof fun !== 'function') {
-      throw new TypeError();
-    }
-
-    var res = [];
-    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-    for (var i = 0; i < len; i++) {
-      if (i in t) {
-        var val = t[i];
-
-        // NOTE: Technically this should Object.defineProperty at
-        //       the next index, as push can be affected by
-        //       properties on Object.prototype and Array.prototype.
-        //       But that method's new, and collisions should be
-        //       rare, so use the more-compatible alternative.
-        if (fun.call(thisArg, val, i, t)) {
-          res.push(val);
-        }
-      }
-    }
-
-    return res;
-  };
-}
-
-// implement array.map(fun)
-// refer to https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-//
-// Production steps of ECMA-262, Edition 5, 15.4.4.19
-// Reference: http://es5.github.io/#x15.4.4.19
-if (!Array.prototype.map) {
-
-  Array.prototype.map = function(callback, thisArg) {
-
-    var T, A, k;
-
-    if (this == null) {
-      throw new TypeError(' this is null or not defined');
-    }
-
-    // 1. Let O be the result of calling ToObject passing the |this|
-    //    value as the argument.
-    var O = Object(this);
-
-    // 2. Let lenValue be the result of calling the Get internal
-    //    method of O with the argument "length".
-    // 3. Let len be ToUint32(lenValue).
-    var len = O.length >>> 0;
-
-    // 4. If IsCallable(callback) is false, throw a TypeError exception.
-    // See: http://es5.github.com/#x9.11
-    if (typeof callback !== 'function') {
-      throw new TypeError(callback + ' is not a function');
-    }
-
-    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
-    if (arguments.length > 1) {
-      T = thisArg;
-    }
-
-    // 6. Let A be a new array created as if by the expression new Array(len)
-    //    where Array is the standard built-in constructor with that name and
-    //    len is the value of len.
-    A = new Array(len);
-
-    // 7. Let k be 0
-    k = 0;
-
-    // 8. Repeat, while k < len
-    while (k < len) {
-
-      var kValue, mappedValue;
-
-      // a. Let Pk be ToString(k).
-      //   This is implicit for LHS operands of the in operator
-      // b. Let kPresent be the result of calling the HasProperty internal
-      //    method of O with argument Pk.
-      //   This step can be combined with c
-      // c. If kPresent is true, then
-      if (k in O) {
-
-        // i. Let kValue be the result of calling the Get internal
-        //    method of O with argument Pk.
-        kValue = O[k];
-
-        // ii. Let mappedValue be the result of calling the Call internal
-        //     method of callback with T as the this value and argument
-        //     list containing kValue, k, and O.
-        mappedValue = callback.call(T, kValue, k, O);
-
-        // iii. Call the DefineOwnProperty internal method of A with arguments
-        // Pk, Property Descriptor
-        // { Value: mappedValue,
-        //   Writable: true,
-        //   Enumerable: true,
-        //   Configurable: true },
-        // and false.
-
-        // In browsers that support Object.defineProperty, use the following:
-        // Object.defineProperty(A, k, {
-        //   value: mappedValue,
-        //   writable: true,
-        //   enumerable: true,
-        //   configurable: true
-        // });
-
-        // For best browser support, use the following:
-        A[k] = mappedValue;
-      }
-      // d. Increase k by 1.
-      k++;
-    }
-
-    // 9. return A
-    return A;
-  };
-}
+// requires
+// * JavaScript >= ES5
 
 // --- Ruby Array methods ---
 
@@ -247,11 +117,7 @@ if (!Array.prototype.compact) {
 
 // Array#concat -> ary
 //
-if (!Array.prototype.concat) {
-  Array.prototype.concat = function () {
-    //
-  };
-}
+// (already implemented)
 
 // Array#count -> int
 // Array#count(obj) -> int
@@ -306,11 +172,13 @@ if (!Array.prototype.dig) {
 
 // Array#drop(n) -> new_ary
 //
-// See also #take
+//   See also #take
 //
 if (!Array.prototype.drop) {
-  Array.prototype.drop = function () {
-    //
+  Array.prototype.drop = function (n) {
+    if (this == null) throw new TypeError();
+    var array = this;
+    return array.slice(array.length - n, array.length);
   };
 }
 
@@ -324,10 +192,10 @@ if (!Array.prototype.dropWhile) {
 
 // Array#each { |item| block } -> ary
 //
+//   Alias for Array.prototype.forEach
+//
 if (!Array.prototype.each) {
-  Array.prototype.each = function () {
-    //
-  };
+  Array.prototype.each = forEach;
 }
 
 // Array#each_index { |item| block } -> ary
@@ -387,7 +255,6 @@ if (!Array.prototype.findIndex) {
 //
 if (!Array.prototype.first) {
   Array.prototype.first = function () {
-    if (this == null) throw new TypeError();
     var array = this;
     return array[0];
   };
@@ -417,21 +284,13 @@ if (!Array.prototype.flatten) {
   };
 }
 
-// // Array#frozen?
-// //
-// if (!Array.prototype.frozen) {
-//   Array.prototype.frozen = function () {
-//     //
-//   };
-// }
+// Array#frozen?
+//
+// (not needed)
 
-// // Array#hash
-// //
-// if (!Array.prototype.hash) {
-//   Array.prototype.hash = function () {
-//     //
-//   };
-// }
+// Array#hash
+//
+// (not needed)
 
 // Array#include(obj) -> true or false
 //
@@ -441,7 +300,8 @@ if (!Array.prototype.include) {
   };
 }
 
-// Array#index
+// Array#index(obj) -> int or nil
+// Array#index { |item| block } -> int or nil
 //
 if (!Array.prototype.index) {
   Array.prototype.index = function () {
@@ -449,7 +309,7 @@ if (!Array.prototype.index) {
   };
 }
 
-// Array#initialize_copy
+// Array#initialize_copy(other_ary) -> ary
 //
 if (!Array.prototype.initializeCopy) {
   Array.prototype.initializeCopy = function () {
@@ -457,7 +317,7 @@ if (!Array.prototype.initializeCopy) {
   };
 }
 
-// Array#insert
+// Array#insert(index, obj...) -> ary
 //
 if (!Array.prototype.insert) {
   Array.prototype.insert = function () {
@@ -465,23 +325,15 @@ if (!Array.prototype.insert) {
   };
 }
 
-// Array#inspect
+// Array#inspect -> string
 //
-if (!Array.prototype.inspect) {
-  Array.prototype.inspect = function () {
-    //
-  };
-}
+// (not needed)
 
-// // Array#join
-// //
-// if (!Array.prototype.join) {
-//   Array.prototype.join = function () {
-//     //
-//   };
-// }
+// Array#join(sepaator=",") -> string
+//
+// (already implemented)
 
-// Array#keep_if
+// Array#keep_if { |item| block } -> ary
 //
 if (!Array.prototype.keepIf) {
   Array.prototype.keepIf = function () {
@@ -489,39 +341,28 @@ if (!Array.prototype.keepIf) {
   };
 }
 
-// Array#last
+// Array#last -> obj or nil
+// Array#last(n) -> new_ary
 //
 if (!Array.prototype.last) {
   Array.prototype.last = function () {
-    //
+    return this[this.length - 1];
   };
 }
 
-// // Array#length
-// //
-// if (!Array.prototype.length) {
-//   Array.prototype.length = function () {
-//     //
-//   };
-// }
-
-// Array#map
+// Array#length -> int
 //
-if (!Array.prototype.map) {
-  Array.prototype.map = function () {
-    //
-  };
-}
+// (already implemented)
 
-// Array#pack
+// Array#map { |item| block } -> ary
 //
-if (!Array.prototype.pack) {
-  Array.prototype.pack = function () {
-    //
-  };
-}
+// (already implemented)
 
-// Array#permutation
+// Array#pack(aTemplateString) -> aBinaryString
+//
+// (not needed)
+
+// Array#permutation(n) -> ary
 //
 if (!Array.prototype.permutation) {
   Array.prototype.permutation = function () {
@@ -529,15 +370,11 @@ if (!Array.prototype.permutation) {
   };
 }
 
-// // Array#pop
-// //
-// if (!Array.prototype.pop) {
-//   Array.prototype.pop = function () {
-//     //
-//   };
-// }
+// Array#pop -> obj or nil
+//
+// (already implemented)
 
-// Array#product
+// Array#product(other_ary, ...) -> new_ary
 //
 if (!Array.prototype.product) {
   Array.prototype.product = function () {
@@ -545,15 +382,11 @@ if (!Array.prototype.product) {
   };
 }
 
-// // Array#push
-// //
-// if (!Array.prototype.push) {
-//   Array.prototype.push = function () {
-//     //
-//   };
-// }
+// Array#push(obj, ...)
+//
+// (already implemented)
 
-// Array#rassoc
+// Array#rassoc(obj) -> element_ary or nil
 //
 if (!Array.prototype.rassoc) {
   Array.prototype.rassoc = function () {
@@ -561,7 +394,7 @@ if (!Array.prototype.rassoc) {
   };
 }
 
-// Array#reject
+// Array#reject { |item| block } -> new_ary
 //
 if (!Array.prototype.reject) {
   Array.prototype.reject = function () {
@@ -569,7 +402,7 @@ if (!Array.prototype.reject) {
   };
 }
 
-// Array#repeated_combination
+// Array#repeated_combination(n) -> ary
 //
 if (!Array.prototype.repeated_combination) {
   Array.prototype.repeated_combination = function () {
@@ -577,7 +410,7 @@ if (!Array.prototype.repeated_combination) {
   };
 }
 
-// Array#repeated_permutation
+// Array#repeated_permutation(n) -> ary
 //
 if (!Array.prototype.repeated_permutation) {
   Array.prototype.repeated_permutation = function () {
@@ -585,7 +418,7 @@ if (!Array.prototype.repeated_permutation) {
   };
 }
 
-// Array#replace
+// Array#replace(other_ary) -> ary
 //
 if (!Array.prototype.replace) {
   Array.prototype.replace = function () {
@@ -593,15 +426,11 @@ if (!Array.prototype.replace) {
   };
 }
 
-// Array#reverse
+// Array#reverse -> new_ary
 //
-if (!Array.prototype.reverse) {
-  Array.prototype.reverse = function () {
-    //
-  };
-}
+// (already implemented)
 
-// Array#reverse_each
+// Array#reverse_each { |item| block } -> ary
 //
 if (!Array.prototype.reverseEach) {
   Array.prototype.reverseEach = function () {
@@ -609,7 +438,8 @@ if (!Array.prototype.reverseEach) {
   };
 }
 
-// Array#rindex
+// Array#rindex(obj) -> int or nil
+// Array#rindex { |item| block } -> int or nil
 //
 if (!Array.prototype.rindex) {
   Array.prototype.rindex = function () {
@@ -617,7 +447,7 @@ if (!Array.prototype.rindex) {
   };
 }
 
-// Array#rotate
+// Array#rotate(count=1) -> new_ary
 //
 if (!Array.prototype.rotate) {
   Array.prototype.rotate = function () {
@@ -625,7 +455,8 @@ if (!Array.prototype.rotate) {
   };
 }
 
-// Array#sample
+// Array#sample -> obj
+// Array#sample(n) -> new_ary
 //
 if (!Array.prototype.sample) {
   Array.prototype.sample = function () {
@@ -633,7 +464,7 @@ if (!Array.prototype.sample) {
   };
 }
 
-// Array#select
+// Array#select { |item| block } -> new_ary
 //
 if (!Array.prototype.select) {
   Array.prototype.select = function () {
@@ -641,15 +472,11 @@ if (!Array.prototype.select) {
   };
 }
 
-// Array#shift
+// Array#shift -> obj or nil
 //
-if (!Array.prototype.shift) {
-  Array.prototype.shift = function () {
-    //
-  };
-}
+// (already implemented)
 
-// Array#shuffle
+// Array#shuffle -> new_ary
 //
 if (!Array.prototype.shuffle) {
   Array.prototype.shuffle = function () {
@@ -657,31 +484,31 @@ if (!Array.prototype.shuffle) {
   };
 }
 
-// Array#size
+// Array#size -> int
 //
 if (!Array.prototype.size) {
   Array.prototype.size = function () {
-    //
+    var array = this;
+    return array.length;
   };
 }
 
-// Array#slice
+// Array#slice(index) -> obj or nil
 //
-if (!Array.prototype.slice) {
-  Array.prototype.slice = function () {
-    //
-  };
-}
-
-// Array#sort
+//   Alias for #at
 //
-if (!Array.prototype.sort) {
-  Array.prototype.sort = function () {
-    //
-  };
-}
+// Array#slice(start, length) -> new_ary or nil
+//
+//   JavaScript implementation is Array#slice(start, end)
+//   but,  Ruby implementation is Array#slice(start, length)
+//   therefore decided to not override JS implementation with Ruby one.
+//
 
-// Array#sort_by
+// Array#sort -> new_ary
+//
+// (already implemented)
+
+// Array#sort_by { |obj| block } -> ary
 //
 if (!Array.prototype.sortBy) {
   Array.prototype.sortBy = function () {
@@ -689,15 +516,18 @@ if (!Array.prototype.sortBy) {
   };
 }
 
-// Array#take
+// Array#take(n) -> ary
 //
 if (!Array.prototype.take) {
-  Array.prototype.take = function () {
-    //
+  Array.prototype.take = function (n) {
+    if (this == null) throw new TypeError();
+    var array = this;
+    return array.slice(0, n);
+    return array;
   };
 }
 
-// Array#take_while
+// Array#take_while { |obj| block } -> new_ary
 //
 if (!Array.prototype.takeWhile) {
   Array.prototype.takeWhile = function () {
@@ -705,15 +535,15 @@ if (!Array.prototype.takeWhile) {
   };
 }
 
-// Array#to_a
+// Array#to_a -> ary
 //
 if (!Array.prototype.toArray) {
   Array.prototype.toArray = function () {
-    //
+    return this;
   };
 }
 
-// Array#to_h
+// Array#to_h -> hash
 //
 if (!Array.prototype.toHash) {
   Array.prototype.toHash = function () {
@@ -721,15 +551,11 @@ if (!Array.prototype.toHash) {
   };
 }
 
-// Array#to_s
+// Array#to_s -> string
 //
-if (!Array.prototype.toString) {
-  Array.prototype.toString = function () {
-    //
-  };
-}
+// (already implemented by toString)
 
-// Array#transpose
+// Array#transpose -> new_ary
 //
 if (!Array.prototype.transpose) {
   Array.prototype.transpose = function () {
@@ -737,7 +563,8 @@ if (!Array.prototype.transpose) {
   };
 }
 
-// Array#uniq
+// Array#uniq -> new_ary
+// Array#uniq { |item| block } -> new_ary
 //
 if (!Array.prototype.uniq) {
   Array.prototype.uniq = function () {
@@ -745,15 +572,11 @@ if (!Array.prototype.uniq) {
   };
 }
 
-// Array#unshift
+// Array#unshift(obj, ...)
 //
-if (!Array.prototype.unshift) {
-  Array.prototype.unshift = function () {
-    //
-  };
-}
+// (already implemented)
 
-// Array#values_at
+// Array#values_at(selector, ...) -> new_ary
 //
 if (!Array.prototype.valuesAt) {
   Array.prototype.valuesAt = function () {
@@ -761,7 +584,7 @@ if (!Array.prototype.valuesAt) {
   };
 }
 
-// Array#zip
+// Array#zip(other_ary, ...) -> new_ary
 //
 if (!Array.prototype.zip) {
   Array.prototype.zip = function () {
