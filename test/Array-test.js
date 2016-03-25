@@ -254,8 +254,11 @@ describe('Array', () => {
   describe('#fill', () => {
     it('should set the selected elements of self to obj passed', () => {
       var a = ["a", "b", "c", "d"];
-      assert.deepEqual(a.fill("x"), ["x", "x", "x", "x"]);
-      assert.deepEqual(a.fill((i) => i * i), [0, 1, 4, 9]);
+      assert.deepEqual(a.rubyFill("x"), ["x", "x", "x", "x"]);
+      assert.deepEqual(a, ["x", "x", "x", "x"]);
+      assert.deepEqual(a.rubyFill("z", 2), ["x", "x", "z", "z"]);
+      assert.deepEqual(a.rubyFill("y", 0, 2), ["y", "y", "z", "z"]);
+      assert.deepEqual(a.rubyFill((i) => i * i), [0, 1, 4, 9]);
     });
   });
 
