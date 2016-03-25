@@ -303,7 +303,7 @@ describe('Array', () => {
     });
   });
 
-  describe('#fill', () => {
+  describe('#fill (#rubyFill)', () => {
     it('should set the selected elements of self to obj passed', () => {
       var a = ["a", "b", "c", "d"];
       assert.deepEqual(a.rubyFill("x"), ["x", "x", "x", "x"]);
@@ -314,11 +314,11 @@ describe('Array', () => {
     });
   });
 
-  describe('#find', () => {
+  describe('#find (#rubyFind)', () => {
     it('should return the first for which block is true', () => {
       var a = [1,2,3,4,5,6,7,8,9,10];
-      assert.equal(a.find((x) => x % 2 == 0 && x % 3 == 0), 6);
-      assert.equal(a.find((x) => x % 3 == 0 && x % 4 == 0), null);
+      assert.equal(a.rubyFind((x) => x % 2 == 0 && x % 3 == 0), 6);
+      assert.equal(a.rubyFind((x) => x % 3 == 0 && x % 4 == 0), null);
     });
   });
 
@@ -329,7 +329,7 @@ describe('Array', () => {
     });
   });
 
-  describe('#find_index', () => {
+  describe('#find_index (#rubyFindIndex)', () => {
     it('should return the index of the first object in self.', () => {
       var a = ["a", "b", "c"];
       assert.equal(a.rubyFindIndex("b"), 1);
@@ -655,14 +655,14 @@ describe('Array', () => {
   });
 
   describe('#take', () => {
-    it('should retuns first n elements from the array.', () => {
+    it('should return first n elements from the array.', () => {
       var a = [1,2,3,4,5];
       assert.deepEqual(a.take(3), [1,2,3]);
     });
   });
 
   describe('#take_while', () => {
-    it('should passes elements to the block until retuns false, ' +
+    it('should passes elements to the block until returns false, ' +
         'then stop iterating and return an array of all prior elements.', () => {
       var a = [1,2,3,4,5,0];
       assert.deepEqual(a.takeWhile((x) => x < 3), [1, 2]);
@@ -686,18 +686,42 @@ describe('Array', () => {
   });
 
   describe('#uniq', () => {
-    //
+    it('should remove duplicate elements from self.', () => {
+      var a = ["a", "a", "b", "b", "c"];
+      assert.deepEqual(a.uniq(), ["a", "b", "c"]);
+    });
+
+    it('should use the return value of the block for comparison.', () => {
+      var a = [["student","sam"], ["student","george"], ["teacher","matz"]];
+      assert.deepEqual(a.uniq((x) => x.first()), [["student", "sam"], ["teacher", "matz"]]);
+    });
   });
 
   describe('#unshift', () => {
-    //
+    it('should prepends objects to the front of self.', () => {
+      var a = ["b", "c", "d"];
+      assert.deepEqual(a.unshift("a"), ["a", "b", "c", "d"]);
+      assert.deepEqual(a.unshift(1, 2), [1, 2, "a", "b", "c", "d"]);
+    });
   });
 
   describe('#values_at', () => {
-    //
+    it('should return an array containing the elements in self corresponding to the given selector(s).', () => {
+      var a = ["a", "b", "c", "d", "e", "f"];
+      assert.deepEqual(a.valuesAt(1, 3, 5), ["b", "d", "f"]);
+      assert.deepEqual(a.valuesAt(1, 3, 5, 7), ["b", "d", "f", null]);
+      assert.deepEqual(a.valuesAt(-1, -2, -2, -7), ["f", "e", "e", null]);
+    });
   });
 
   describe('#zip', () => {
-    //
+    it('should convert any arguments to arrays, then merges elements of self ' +
+        'with corresponding elements from each argument.', () => {
+      var a = [4,5,6];
+      var b = [7,8,9];
+      assert.deepEqual([1,2,3].zip(a, b), [[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+      assert.deepEqual([1,2].zip(a, b), [[1, 4, 7], [2, 5, 8]]);
+      assert.deepEqual(a.zip([1,2], [8]), [[4, 1, 8], [5, 2, null], [6, null, null]]);
+    });
   });
 });
