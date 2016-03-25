@@ -156,7 +156,8 @@ describe('Array', () => {
     it('should delete the element at the specified index.', () => {
       var a = ["ant", "bat", "cat", "dog"];
       assert.equal(a.deleteAt(2), "cat");
-      assert.deepEqual(a, ["ant", "bat", "dog"]);
+      assert.equal(a.deleteAt(-1), "dog");
+      assert.deepEqual(a, ["ant", "bat"]);
       assert.equal(a.deleteAt(99), null);
     });
   });
