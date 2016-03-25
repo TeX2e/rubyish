@@ -130,4 +130,41 @@ describe('Array', () => {
       assert.equal(a.count(x => x % 2 == 0), 3);
     });
   });
+
+  describe('#cycle', () => {
+    it('should call the block for each element n times.', () => {
+      var a = ["a", "b", "c"];
+      var result = "";
+      a.cycle(3, function (elem) {
+        result += elem;
+      });
+      assert.equal(result, "abcabcabc");
+    });
+  });
+
+  describe('#delete', () => {
+    it('should delete all items from self that are equal to given obj', () => {
+      var a = ["a", "b", "b", "b", "c"];
+      assert.equal(a.delete("b"), "b");
+      assert.deepEqual(a, ["a", "c"]);
+      assert.equal(a.delete("z"), null);
+      assert.equal(a.delete("z", () => "not found"), "not found");
+    });
+  });
+
+  describe('#delete_at', () => {
+    it('should delete the element at the specified index.', () => {
+      var a = ["ant", "bat", "cat", "dog"];
+      assert.equal(a.deleteAt(2), "cat");
+      assert.deepEqual(a, ["ant", "bat", "dog"]);
+      assert.equal(a.deleteAt(99), null);
+    });
+  });
+
+  describe('#delete_if', () => {
+    it('should delete every elements of self for which block evaluates to true', () => {
+      var scores = [97, 42, 75];
+      assert.deepEqual(scores.deleteIf(x => x < 80), [97]);
+    });
+  });
 });
