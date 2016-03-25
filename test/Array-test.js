@@ -262,6 +262,13 @@ describe('Array', () => {
     });
   });
 
+  describe('#find_all', () => {
+    it('should return an array containing all elements of self for which the given block returns a true value.', () => {
+      var a = [1,2,3,4,5];
+      assert.deepEqual(a.findAll((x) => x % 2 == 0), [2, 4]);
+    });
+  });
+
   describe('#find_index', () => {
     it('should return the index of the first object in self.', () => {
       var a = ["a", "b", "c"];
