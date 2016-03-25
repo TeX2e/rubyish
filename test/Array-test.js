@@ -186,7 +186,11 @@ describe('Array', () => {
   });
 
   describe('#detect', () => {
-    //
+    it('should return the first for which the given block is true.', () => {
+      var a = [1,2,3,4,5,6,7,8,9,10];
+      assert.equal(a.detect((x) => x % 2 == 0 && x % 3 == 0), 6);
+      assert.equal(a.detect((x) => x % 3 == 0 && x % 4 == 0), null);
+    });
   });
 
   describe('#dig', () => {
@@ -310,6 +314,14 @@ describe('Array', () => {
     });
   });
 
+  describe('#find', () => {
+    it('should return the first for which block is true', () => {
+      var a = [1,2,3,4,5,6,7,8,9,10];
+      assert.equal(a.find((x) => x % 2 == 0 && x % 3 == 0), 6);
+      assert.equal(a.find((x) => x % 3 == 0 && x % 4 == 0), null);
+    });
+  });
+
   describe('#find_all', () => {
     it('should return an array containing all elements of self for which the given block returns a true value.', () => {
       var a = [1,2,3,4,5];
@@ -320,9 +332,9 @@ describe('Array', () => {
   describe('#find_index', () => {
     it('should return the index of the first object in self.', () => {
       var a = ["a", "b", "c"];
-      assert.equal(a.findIndex("b"), 1);
-      assert.equal(a.findIndex("z"), null);
-      assert.equal(a.findIndex((x) => x === "b"), 1);
+      assert.equal(a.rubyFindIndex("b"), 1);
+      assert.equal(a.rubyFindIndex("z"), null);
+      assert.equal(a.rubyFindIndex((x) => x === "b"), 1);
     });
   });
 
