@@ -168,4 +168,156 @@ describe('Array', () => {
       assert.deepEqual(scores.deleteIf(x => x < 80), [97]);
     });
   });
+
+  describe('#dig', () => {
+    it('should extract the nested value specified by the sequence of indexes', () => {
+      var a = [[1, [2, 3]]];
+      assert.equal(a.dig(0, 1, 1), 3);
+      assert.equal(a.dig(1, 2, 3), null);
+      assert.equal(a.dig(0, 0, 0), null);
+
+      assert.equal([42, { foo: "bar" }].dig(1, "foo"), "bar");
+    });
+  });
+
+  describe('#drop', () => {
+    it('should drop first n elements from self and returns the rest of the elements.', () => {
+      var a = [1, 2, 3, 4, 5, 0];
+      assert.deepEqual(a.drop(3), [4, 5, 0]);
+      assert.deepEqual(a, [1, 2, 3, 4, 5, 0]);
+    });
+  });
+
+  describe('#drop_while', () => {
+    it('should drops elements up to the first element for which the block returns false' +
+        'and returns an array containing the remaining elements.', () => {
+      var a = [1, 2, 3, 4, 5, 0];
+      assert.deepEqual(a.dropWhile(x => x < 3), [3, 4, 5, 0]);
+      assert.deepEqual(a, [1, 2, 3, 4, 5, 0]);
+    });
+  });
+
+  describe('#each', () => {
+    it('should call the given block once for each element in self.', () => {
+      var a = ["a", "b", "c"];
+      var result = "";
+      a.each(function (elem) {
+        result += elem;
+      });
+      assert.equal(result, "abc");
+    });
+  });
+
+  describe('#each_index', () => {
+    it('should same as #each, but passes the index of the element instead of the element itself.', () => {
+      var a = ["a", "b", "c"];
+      var result = "";
+      a.eachIndex(function (elem) {
+        result += elem;
+      });
+      assert.equal(result, "012");
+    });
+  });
+
+  describe('#empty', () => {
+    it('should return true if self contains no elements.', () => {
+      assert.equal([].empty(), true);
+    });
+  });
+
+  describe('#eql', () => {
+    it('should return true if self and other are the same object, ' +
+        'or are both arrays with the same content.', () => {
+      var array = [1, 2, [3, 4]];
+      var other = [1, 2, [3, 4]];
+      assert.equal(array.eql(other), true);
+    });
+  });
+
+  describe('#fetch', () => {
+    it('should try to return the element at position index, but throws an Error ' +
+        'if the referenced index lies outside of the array bounds.', () => {
+      var a = [11, 22, 33, 44];
+      assert.equal(a.fetch(1), 22);
+      assert.equal(a.fetch(-1), 44);
+      assert.throws(() => a.fetch(4));
+      assert.throws(() => a.fetch(-5));
+    });
+
+    it('should prevent an IndexError by supplying a second argument, which will act as a default value.', () => {
+      var a = [11, 22, 33, 44];
+      assert.equal(a.fetch(-5, "cat"), "cat");
+      assert.equal(a.fetch(4, (i) => `${i} is out of bounds`), "4 is out of bounds");
+    });
+  });
+
+  describe('#fill', () => {
+    it('should set the selected elements of self to obj passed', () => {
+      var a = ["a", "b", "c", "d"];
+      assert.deepEqual(a.fill("x"), ["x", "x", "x", "x"]);
+      assert.deepEqual(a.fill((i) => i * i), [0, 1, 4, 9]);
+    });
+  });
+
+  describe('#find_index', () => {
+    it('should return the index of the first object in self.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.findIndex("b"), 1);
+      assert.equal(a.findIndex("z"), null);
+      assert.equal(a.findIndex((x) => x === "b"), 1);
+    });
+  });
+
+  describe('#first', () => {
+    it('should return the first element.', () => {
+      var a = ["q", "r", "s", "t"];
+      assert.equal(a.first(), "q");
+      assert.equal([].first(), null);
+    });
+
+    it('should return the first n elements.', () => {
+      var a = ["q", "r", "s", "t"];
+      assert.deepEqual(a.first(2), ["q", "r"]);
+    });
+  });
+
+  describe('#flatten', () => {
+    it('should return a new array that is one-dimensional flattening of self.', () => {
+      var a = [1, 2, [3, [4, 5]]];
+      assert.deepEqual(a.flatten(), [1, 2, 3, 4, 5]);
+    });
+  });
+
+  describe('#include', () => {
+    it('should return true if the given object is present in self.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.include("b"), true);
+      assert.equal(a.include("z"), false);
+    });
+  });
+
+  describe('#index', () => {
+    it('should return the index of the first object in self.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.index("b"), 1);
+      assert.equal(a.index("z"), null);
+      assert.equal(a.index((x) => x === "b"), 1);
+    });
+  });
+
+  describe('#initialize_copy', () => {
+    it('should repalce the contens of self with the contens of other_ary.', () => {
+      var a = ["a", "b", "c"];
+      assert.deepEqual(a.replace(["x", "y", "z"]), ["x", "y", "z"]);
+      assert.deepEqual(a, ["x", "y", "z"]);
+    });
+  });
+
+  describe('#insert', () => {
+    it('should insert the given values before the element with the given index.', () => {
+      var a = ["a", "b", "c", "d"];
+      assert.deepEqual(a.insert(2, 99), ["a", "b", 99, "c", "d"]);
+      assert.deepEqual(a, ["a", "b", 99, "c", "d"]);
+    });
+  });
 });
