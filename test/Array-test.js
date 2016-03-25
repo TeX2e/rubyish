@@ -80,6 +80,14 @@ describe('Array', () => {
     });
   });
 
+  describe.skip('#chunk', () => {
+    //
+  });
+
+  describe.skip('#chunk_while', () => {
+    //
+  });
+
   describe('#clear', () => {
     it('should remove all element from self.', () => {
       var a = [ "a", "b", "c", "d", "e" ];
@@ -88,12 +96,20 @@ describe('Array', () => {
     });
   });
 
+  describe('#clone', () => {
+    //
+  });
+
   describe('#collect', () => {
     it('should create a new array containing the values returned by the block.', () => {
       var a = [ "a", "b", "c", "d" ];
       assert.deepEqual(a.collect(x => x + "!"), ["a!", "b!", "c!", "d!"]);
       assert.deepEqual(a, [ "a", "b", "c", "d" ]);
     });
+  });
+
+  describe('#collect_concat', () => {
+    //
   });
 
   describe.skip('#combination', () => {
@@ -169,6 +185,10 @@ describe('Array', () => {
     });
   });
 
+  describe('#detect', () => {
+    //
+  });
+
   describe('#dig', () => {
     it('should extract the nested value specified by the sequence of indexes', () => {
       var a = [[1, [2, 3]]];
@@ -197,6 +217,10 @@ describe('Array', () => {
     });
   });
 
+  describe('#dup', () => {
+    //
+  });
+
   describe('#each', () => {
     it('should call the given block once for each element in self.', () => {
       var a = ["a", "b", "c"];
@@ -208,6 +232,14 @@ describe('Array', () => {
     });
   });
 
+  describe('#each_cons', () => {
+    //
+  });
+
+  describe('#each_entry', () => {
+    //
+  });
+
   describe('#each_index', () => {
     it('should same as #each, but passes the index of the element instead of the element itself.', () => {
       var a = ["a", "b", "c"];
@@ -217,6 +249,18 @@ describe('Array', () => {
       });
       assert.equal(result, "012");
     });
+  });
+
+  describe('#each_slice', () => {
+    //
+  });
+
+  describe('#each_with_index', () => {
+    //
+  });
+
+  describe('#each_with_object', () => {
+    //
   });
 
   describe('#empty', () => {
@@ -232,6 +276,10 @@ describe('Array', () => {
       var other = [1, 2, [3, 4]];
       assert.equal(array.eql(other), true);
     });
+  });
+
+  describe('#equal', () => {
+    //
   });
 
   describe('#fetch', () => {
@@ -291,11 +339,27 @@ describe('Array', () => {
     });
   });
 
+  describe('#flat_map', () => {
+    //
+  });
+
   describe('#flatten', () => {
     it('should return a new array that is one-dimensional flattening of self.', () => {
       var a = [1, 2, [3, [4, 5]]];
       assert.deepEqual(a.flatten(), [1, 2, 3, 4, 5]);
     });
+  });
+
+  describe('#grep', () => {
+    //
+  });
+
+  describe('#grep_v', () => {
+    //
+  });
+
+  describe('#group_by', () => {
+    //
   });
 
   describe('#include', () => {
@@ -315,12 +379,8 @@ describe('Array', () => {
     });
   });
 
-  describe('#initialize_copy', () => {
-    it('should repalce the contens of self with the contens of other_ary.', () => {
-      var a = ["a", "b", "c"];
-      assert.deepEqual(a.initialize_copy(["x", "y", "z"]), ["x", "y", "z"]);
-      assert.deepEqual(a, ["x", "y", "z"]);
-    });
+  describe('#inject', () => {
+    //
   });
 
   describe('#insert', () => {
@@ -329,6 +389,10 @@ describe('Array', () => {
       assert.deepEqual(a.insert(2, 99), ["a", "b", 99, "c", "d"]);
       assert.deepEqual(a.insert(-1, 100), ["a", "b", 99, "c", "d", 100]);
     });
+  });
+
+  describe('#inspect', () => {
+    //
   });
 
   describe('#join', () => {
@@ -363,7 +427,47 @@ describe('Array', () => {
     });
   });
 
+  describe('#max', () => {
+    //
+  });
+
+  describe('#max_by', () => {
+    //
+  });
+
+  describe('#menber', () => {
+    //
+  });
+
+  describe('#min', () => {
+    //
+  });
+
+  describe('#min_by', () => {
+    //
+  });
+
+  describe('#minmax', () => {
+    //
+  });
+
+  describe('#minmax_by', () => {
+    //
+  });
+
+  describe('#none', () => {
+    //
+  });
+
+  describe('#one', () => {
+    //
+  });
+
   describe.skip('#pack', () => {
+    //
+  });
+
+  describe('#partition', () => {
     //
   });
 
@@ -410,6 +514,10 @@ describe('Array', () => {
       assert.deepEqual(a.rassoc("two"), [2, "two"]);
       assert.deepEqual(a.rassoc("four"), null);
     });
+  });
+
+  describe('#reduce', () => {
+    //
   });
 
   describe('#reject', () => {
@@ -477,6 +585,10 @@ describe('Array', () => {
     });
   });
 
+  describe('#select', () => {
+    //
+  });
+
   describe('#shift', () => {
     it('should remove the first element of self and return it.', () => {
       var a = ["-m", "-q", "-o", "filename"];
@@ -499,7 +611,19 @@ describe('Array', () => {
     });
   });
 
-  describe.skip('#slice', () => {
+  describe('#slice', () => {
+    //
+  });
+
+  describe('#slice_after', () => {
+    //
+  });
+
+  describe('#slice_before', () => {
+    //
+  });
+
+  describe('#slice_when', () => {
     //
   });
 
@@ -533,11 +657,19 @@ describe('Array', () => {
     });
   });
 
+  describe('#tap', () => {
+    //
+  });
+
   describe('#to_a', () => {
     //
   });
 
   describe('#to_h', () => {
+    //
+  });
+
+  describe('#transpose', () => {
     //
   });
 
