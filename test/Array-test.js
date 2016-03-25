@@ -308,7 +308,7 @@ describe('Array', () => {
   describe('#initialize_copy', () => {
     it('should repalce the contens of self with the contens of other_ary.', () => {
       var a = ["a", "b", "c"];
-      assert.deepEqual(a.replace(["x", "y", "z"]), ["x", "y", "z"]);
+      assert.deepEqual(a.initialize_copy(["x", "y", "z"]), ["x", "y", "z"]);
       assert.deepEqual(a, ["x", "y", "z"]);
     });
   });
@@ -317,7 +317,233 @@ describe('Array', () => {
     it('should insert the given values before the element with the given index.', () => {
       var a = ["a", "b", "c", "d"];
       assert.deepEqual(a.insert(2, 99), ["a", "b", 99, "c", "d"]);
-      assert.deepEqual(a, ["a", "b", 99, "c", "d"]);
+      assert.deepEqual(a.insert(-1, 100), ["a", "b", 99, "c", "d", 100]);
     });
+  });
+
+  describe('#join', () => {
+    it('should return a string created by converting each element to a string, ' +
+        'separated by the given separator.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.join(""), "abc");
+      assert.equal(a.join("/"), "a/b/c");
+    });
+  });
+
+  describe('#keep_if', () => {
+    it('should delete every elements of self for which the given block eveluates to false.', () => {
+      var a = ["a", "b", "c", "d", "e", "f"];
+      assert.deepEqual(a.keepIf(x => x.match(/[aeiou]/)), ["a", "e"]);
+    });
+  });
+
+  describe('#last', () => {
+    it('should return the last element(s) of self.', () => {
+      var a = ["w", "x", "y", "z"];
+      assert.equal(a.last(), "z");
+      assert.deepEqual(a.last(2), ["y", "z"]);
+    });
+  });
+
+  describe('#map', () => {
+    it('should invoke the given block once for each elements of self.', () => {
+      var a = ["a", "b", "c", "d"];
+      assert.deepEqual(a.map(x => x + "!"), ["a!", "b!", "c!", "d!"]);
+      assert.deepEqual(a, ["a", "b", "c", "d"]);
+    });
+  });
+
+  describe.skip('#pack', () => {
+    //
+  });
+
+  describe.skip('#permutation', () => {
+    it('should yield all permutations of length n of the elements of the array.', () => {
+      var a = [1, 2, 3];
+      assert.deepEqual(a.permutation(1), [[1],[2],[3]]);
+      assert.deepEqual(a.permutation(2), [[1,2],[1,3],[2,1],[2,3],[3,1],[3,2]]);
+      assert.deepEqual(a.permutation(3), [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]);
+      assert.deepEqual(a.permutation(0), [[]]); // one permutation of lenght 0
+      assert.deepEqual(a.permutation(4), []); // no permutations of lenght 4
+    });
+  });
+
+  describe('#pop', () => {
+    it('should remove the last element from self and returns it.', () => {
+      var a = ["a", "b", "c", "d"];
+      assert.equal(a.pop(), "d");
+      assert.deepEqual(a.pop(2), ["b", "c"]);
+      assert.deepEqual(a, ["a"]);
+    });
+  });
+
+  describe('#product', () => {
+    it('should return an array of all combinations of elements from all arrays.', () => {
+      assert.deepEqual([1,2].product([1,2]), [[1,1],[1,2],[2,1],[2,2]]);
+      assert.deepEqual([1,2].product([3,4],[5,6]), [[1,3,5],[1,3,6],[1,4,5],[1,4,6],[2,3,5],[2,3,6],[2,4,5],[2,4,6]]);
+      assert.deepEqual([1,2].product(), [[1],[2]]);
+      assert.deepEqual([1,2].product([]), []);
+    });
+  });
+
+  describe('#push', () => {
+    it('should append the given object(s) on to the end of this array.', () => {
+      var a = ["a", "b", "c"];
+      assert.deepEqual(a.push("d","e","f"), ["a","b","c","d","e","f"]);
+      assert.deepEqual([1,2,3].push(4).push(5), [1,2,3,4,5]);
+    });
+  });
+
+  describe('#rassoc', () => {
+    it('should search through the array comparing obj with the second element of each contained array.', () => {
+      var a = [[1, "one"], [2, "two"], [3, "three"], ["ii", "two"]];
+      assert.deepEqual(a.rassoc("two"), [2, "two"]);
+      assert.deepEqual(a.rassoc("four"), null);
+    });
+  });
+
+  describe('#reject', () => {
+    it('should return a new array containing the items in self for which the given block is not true.', () => {
+      var scores = [97, 42, 75];
+      assert.deepEqual(a.reject((score) => score < 80), [97]);
+    });
+  });
+
+  describe.skip('#repeated_combination', () => {
+    //
+  });
+
+  describe.skip('#repeated_permutation', () => {
+    //
+  });
+
+  describe('#replace', () => {
+    it('should replace the contents of self with the contents of other_ary.', () => {
+      var a = ["a", "b", "c", "d", "e"];
+      assert.deepEqual(a.replace(["x", "y", "z"]), ["x", "y", "z"]);
+      assert.deepEqual(a, ["x", "y", "z"]);
+    });
+  });
+
+  describe('#reverse', () => {
+    it('should returns a new array containing self elements in reverse order.', () => {
+      assert.deepEqual(["a", "b", "c"].reverse(), ["c", "b", "a"]);
+    });
+  });
+
+  describe('#reverse_each', () => {
+    it('should same as #each, but traverses self in reverse order.', () => {
+      var a = ["a", "b", "c"];
+      var result = "";
+      a.reverseEach(function (x) {
+        result += x;
+      });
+      assert.equal(result, "cba");
+    });
+  });
+
+  describe('#rindex', () => {
+    it('should return the index of the last object in self equals to given obj', () => {
+      var a = ["a", "b", "b", "b", "c"];
+      assert.equal(a.rindex("b"), 3);
+      assert.equal(a.rindex("z"), null);
+      assert.equal(a.rindex((x) => x === "b"), 3);
+    });
+  });
+
+  describe('#rotate', () => {
+    it('should return a new array by rotating self.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.rotate(), ["b", "c", "a"]);
+      assert.equal(a, ["a", "b", "c"]);
+      assert.equal(a.rotate(2), ["c", "a", "b"]);
+      assert.equal(a.rotate(-1), ["c", "a", "b"]);
+    });
+  });
+
+  describe('#sample', () => {
+    it('should choose a random element or n random elements.', (done) => {
+      done();
+    });
+  });
+
+  describe('#shift', () => {
+    it('should remove the first element of self and return it.', () => {
+      var a = ["-m", "-q", "-o", "filename"];
+      assert.equal(a.shift(), "-m");
+      assert.deepEqual(a, ["-q", "-o", "filename"]);
+      assert.deepEqual(a.shift(2), ["-q", "-o"]);
+      assert.deepEqual(a, ["filename"]);
+    });
+  });
+
+  describe('#shuffle', () => {
+    it('should return a new array with elements of self shuffled.', (done) => {
+      done();
+    });
+  });
+
+  describe('#size', () => {
+    it('should alias for length.', () => {
+      assert.equal([1,2,3,4,5].size(), 5);
+    });
+  });
+
+  describe.skip('#slice', () => {
+    //
+  });
+
+  describe('#sort', () => {
+    it('should return a new array created by sorting self.', () => {
+      var a = [3,4,1,5,2];
+      assert.deepEqual(a.sort(), [1,2,3,4,5]);
+      assert.deepEqual(a.sort((x, y) => y - x), [5,4,3,2,1]);
+    });
+  });
+
+  describe('#sort_by', () => {
+    it('should sorts using a set of keys generated by mapping the values.', () => {
+      var words = ["apple", "pear", "fig"];
+      assert.deepEqual(a.sortBy((word) => word.length), ["fig", "pear", "apple"]);
+    });
+  });
+
+  describe('#take', () => {
+    it('should retuns first n elements from the array.', () => {
+      var a = [1,2,3,4,5];
+      assert.deepEqual(a.take(3), [1,2,3]);
+    });
+  });
+
+  describe('#take_while', () => {
+    it('should passes elements to the block until retuns false, ' +
+        'then stop iterating and return an array of all prior elements.', () => {
+      var a = [1,2,3,4,5,0];
+      assert.deepEqual(a.takeWhile((x) => x < 3), [1, 2]);
+    });
+  });
+
+  describe('#to_a', () => {
+    //
+  });
+
+  describe('#to_h', () => {
+    //
+  });
+
+  describe('#uniq', () => {
+    //
+  });
+
+  describe('#unshift', () => {
+    //
+  });
+
+  describe('#values_at', () => {
+    //
+  });
+
+  describe('#zip', () => {
+    //
   });
 });
