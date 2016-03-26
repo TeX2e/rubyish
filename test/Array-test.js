@@ -503,7 +503,7 @@ describe('Array', () => {
     it('should return the object in enum with maximum value.', () => {
       var a = ["cat", "apple", "banana"];
       assert.equal(a.max(), "cat");
-      assert.equal(a.max((a, b) => b.length - a.length), "banana");
+      assert.equal(a.max((a, b) => a.length - b.length), "banana");
 
       var b = [5,1,8,3,7];
       assert.equal(b.max(), 8);
