@@ -300,6 +300,7 @@ describe('Array', () => {
   describe('#empty', () => {
     it('should return true if self contains no elements.', () => {
       assert.equal([].empty(), true);
+      assert.equal([null].empty(), false);
     });
   });
 
