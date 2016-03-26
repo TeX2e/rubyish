@@ -732,8 +732,8 @@ describe('Array', () => {
   });
 
   describe('#sample', () => {
-    it('should choose a random element or n random elements.', (done) => {
-      done();
+    it.skip('should choose a random element or n random elements.', () => {
+      //
     });
   });
 
@@ -755,8 +755,8 @@ describe('Array', () => {
   });
 
   describe('#shuffle', () => {
-    it('should return a new array with elements of self shuffled.', (done) => {
-      done();
+    it.skip('should return a new array with elements of self shuffled.', () => {
+      //
     });
   });
 
@@ -766,20 +766,52 @@ describe('Array', () => {
     });
   });
 
-  describe('#slice', () => {
-    //
+  describe('#slice (#rubySlice)', () => {
+    it('should return the element at index.', () => {
+      var a = ["a", "b", "c", "d", "e"];
+      assert.equal(a.rubySlice(2), "c");
+      assert.equal(a.rubySlice(6), null);
+      assert.equal(a.rubySlice(-2), "d");
+    });
+
+    it('should return a subarray starting at the start and continuing for length elements.', () => {
+      var a = ["a", "b", "c", "d", "e"];
+      assert.deepEqual(a.rubySlice(2, 2), ["c", "d"]);
+      assert.deepEqual(a.rubySlice(4, 7), ["e"]);
+      assert.deepEqual(a.rubySlice(6, 10), null);
+      assert.deepEqual(a.rubySlice(-3, 3), ["c", "d", "e"]);
+    });
+
+    it('is special cases.', () => {
+      var a = ["a", "b", "c", "d", "e"];
+      assert.equal(e.rubySlice(5), null);
+      assert.equal(e.rubySlice(6, 1), null);
+      assert.deepEqual(e.rubySlice(5, 1), []);
+    });
   });
 
   describe('#slice_after', () => {
-    //
+    it('should create an enum for each chunked elements. ' +
+        'The ends of chunks are defined by pattern and the block.', () => {
+      var lines = ["foo\n", "bar\\\n", "baz\n", "\n", "qux\n"];
+      assert.deepEqual(lines.sliceAfter(/[^\\]\n$/), [["foo\n"], ["bar\\\n", "baz\n"], ["\n"], ["qux\n"]]);
+    });
   });
 
   describe('#slice_before', () => {
-    //
+    it('should create an enum for each chunked elements.' +
+        'The biginnings of chunks are defined by pattern and the block.', () => {
+      var lines = ["foo\n", "bar\\\n", "baz\n", "\n", "qux\n"];
+      assert.deepEqual(lines.sliceBefore(/[^\\]\n$/), [["foo\n", "bar\\\n"], ["baz\n"], ["\n"], ["qux\n"]]);
+    });
   });
 
   describe('#slice_when', () => {
-    //
+    it('should create an enum for each chunked elements.' +
+        'The beginnings of chunks are defined by the block.', () => {
+      var a = [1,2,4,9,10,11,12,15,16,19,20,21];
+      assert.deepEqual(a.sliceWhen((i, j) => i+1 !== j), [[1,2],[4],[9,10,11,12],[15,16],[19,20,21]] );
+    });
   });
 
   describe('#sort', () => {
