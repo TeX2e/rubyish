@@ -1,6 +1,6 @@
 
 var assert = require('assert');
-var Array = require('../lib/Array');
+require('../lib/Array');
 
 describe('Array', () => {
   describe('#all', () => {
@@ -243,7 +243,7 @@ describe('Array', () => {
     it('should iterate the given block for each array of consecutive n elements.', () => {
       var a = [1,2,3,4,5];
       var result = "";
-      a.eachCons(function (subary) {
+      a.eachCons(3, function (subary) {
         assert.ok(Array.isArray(subary));
         result += subary.join(",") + "|";
       });
