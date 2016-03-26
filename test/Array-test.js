@@ -109,7 +109,10 @@ describe('Array', () => {
   });
 
   describe('#collect_concat', () => {
-    //
+    it('should return a new array with the concatenated results of running block once for every element in enum.', () => {
+      assert.deepEqual([1,2,3,4].collectConcat((e) => [e, -e]), [1,-1, 2,-2, 3,-3, 4,-4]);
+      assert.deepEqual([[1,2],[3,4]].collectConcat((e) => e.push(100)), [1,2,100,3,4,100]);
+    });
   });
 
   describe.skip('#combination', () => {
@@ -237,10 +240,18 @@ describe('Array', () => {
   });
 
   describe('#each_cons', () => {
-    //
+    it('should iterate the given block for each array of consecutive n elements.', () => {
+      var a = [1,2,3,4,5];
+      var result = "";
+      a.eachCons(function (subary) {
+        assert.ok(Array.isArray(subary));
+        result += subary.join(",") + "|";
+      });
+      assert.equal(result, "1,2,3|2,3,4|3,4,5|");
+    });
   });
 
-  describe('#each_entry', () => {
+  describe.skip('#each_entry', () => {
     //
   });
 
@@ -256,15 +267,34 @@ describe('Array', () => {
   });
 
   describe('#each_slice', () => {
-    //
+    it('should iterate the given block for each slice of n elements.', () => {
+      var a = [1,2,3,4,5,6,7];
+      var result = "";
+      a.eachSlice(3, function (subary) {
+        assert.ok(Array.isArray(subary));
+        result += subary.join(",") + "|";
+      });
+      assert.equal(result, "1,2,3|4,5,6|7|");
+    });
   });
 
   describe('#each_with_index', () => {
-    //
+    it('should calls block with two arguments, the item and its index, for each item in enum.', () => {
+      var a = ["a", "b", "c"];
+      var result = "";
+      a.eachWithIndex(function (item, index) {
+        result += item + index + ",";
+      });
+      assert.equal(result, "a0,b1,c2");
+    });
   });
 
   describe('#each_with_object', () => {
-    //
+    it('should iterates the given block for each element with an arbitrary object given,' +
+        'and return the initiallly given object.', () => {
+      var a = [1,2,3];
+      assert.equal(a.eachWithObject("", (item, memo) => item + memo), "123");
+    });
   });
 
   describe('#empty', () => {
@@ -278,12 +308,18 @@ describe('Array', () => {
         'or are both arrays with the same content.', () => {
       var array = [1, 2, [3, 4]];
       var other = [1, 2, [3, 4]];
+      assert.equal(array.eql(array), true);
       assert.equal(array.eql(other), true);
     });
   });
 
   describe('#equal', () => {
-    //
+    it('should return true if self and other are the same object.', () => {
+      var array = [1, 2, [3, 4]];
+      var other = [1, 2, [3, 4]];
+      assert.equal(array.eql(array), true);
+      assert.equal(array.eql(other), false);
+    });
   });
 
   describe('#fetch', () => {
@@ -352,7 +388,10 @@ describe('Array', () => {
   });
 
   describe('#flat_map', () => {
-    //
+    it('should return a new array with the concatenated results of running block once for every element in enum.', () => {
+      assert.deepEqual([1,2,3,4].flatMap((e) => [e, -e]), [1,-1, 2,-2, 3,-3, 4,-4]);
+      assert.deepEqual([[1,2],[3,4]].flatMap((e) => e.push(100)), [1,2,100,3,4,100]);
+    });
   });
 
   describe('#flatten', () => {
@@ -363,15 +402,30 @@ describe('Array', () => {
   });
 
   describe('#grep', () => {
-    //
+    it('should return an array of every element in enum for which /pattern/ matches element.', () => {
+      var a = ["foo", "bar", "baz"];
+      assert.deepEqual(a.grep(/ba./), ["bar", "baz"]);
+    });
+
+    it('should pass the matching element to the given block and store the block result in the output array.', () => {
+      var a = ["foo", "bar", "baz"];
+      assert.deepEqual(a.grep(/ba./, (m) => m + "!"), ["bar!", "baz!"]);
+    });
   });
 
   describe('#grep_v', () => {
-    //
+    it('should invert the version of #grep.', () => {
+      var a = ["foo", "bar", "baz"];
+      assert.deepEqual(a.grep(/ba./), ["foo"]);
+      assert.deepEqual(a.grep(/ba./, (m) => m.lenght), [3]);
+    });
   });
 
   describe('#group_by', () => {
-    //
+    it('should group the collection by result of the block.', () => {
+      var a = [1,2,3,4,5,6];
+      assert.deepEqual(a.groupBy((x) => x % 3), {0:[3,6], 1:[1,4], 2:[2,5]});
+    });
   });
 
   describe('#include', () => {
@@ -392,7 +446,11 @@ describe('Array', () => {
   });
 
   describe('#inject', () => {
-    //
+    it('should combine all elements of enum by applying a binary operation, specified by a block.', () => {
+      var a = [1,2,3,4,5];
+      assert.equal(a.reduce((memo, obj) => memo + obj), 15);
+      assert.equal(a.reduce("", (memo, obj) => memo + obj), "12345");
+    });
   });
 
   describe('#insert', () => {
@@ -403,7 +461,7 @@ describe('Array', () => {
     });
   });
 
-  describe('#inspect', () => {
+  describe.skip('#inspect', () => {
     //
   });
 
@@ -440,23 +498,67 @@ describe('Array', () => {
   });
 
   describe('#max', () => {
-    //
+    it('should return the object in enum with maximum value.', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.max(), "cat");
+      assert.equal(a.max((a, b) => b.length - a.length), "banana");
+
+      var b = [5,1,8,3,7];
+      assert.equal(b.max(), 8);
+    });
+
+    it('should return maximum n elements as an array.', () => {
+      var b = [5,1,8,3,7];
+      assert.deepEqual(b.max(2), [8,7]);
+    });
   });
 
   describe('#max_by', () => {
-    //
+    it('should return the object in enum that gives the maximum value from the given block', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.maxBy((x) => x.length), "banana");
+    });
+
+    it('should return maximum n elements as an array.', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.maxBy(2, (x) => x.length), ["banana", "apple"]);
+    });
   });
 
   describe('#menber', () => {
-    //
+    it('should return true if any menber of enum equals obj. Equality is tested using ===.', () => {
+      var a = ["a", "b", "c"];
+      assert.equal(a.include("b"), true);
+      assert.equal(a.include("z"), false);
+    });
   });
 
   describe('#min', () => {
-    //
+    it('should return the object in enum with minimum value.', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.min(), "apple");
+      assert.equal(a.min((a, b) => b.length - a.length), "cat");
+
+      var b = [5,1,8,3,7];
+      assert.equal(b.min(), 1);
+    });
+
+    it('should return minimum n elements as an array.', () => {
+      var b = [5,1,8,3,7];
+      assert.deepEqual(b.min(2), [1,3]);
+    });
   });
 
   describe('#min_by', () => {
-    //
+    it('should return the object in enum that gives the minimum value from the given block', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.minBy((x) => x.length), "cat");
+    });
+
+    it('should return maximum n elements as an array.', () => {
+      var a = ["cat", "apple", "banana"];
+      assert.equal(a.minBy(2, (x) => x.length), ["cat", "apple"]);
+    });
   });
 
   describe('#minmax', () => {
