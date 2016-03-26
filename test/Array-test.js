@@ -317,8 +317,8 @@ describe('Array', () => {
     it('should return true if self and other are the same object.', () => {
       var array = [1, 2, [3, 4]];
       var other = [1, 2, [3, 4]];
-      assert.equal(array.eql(array), true);
-      assert.equal(array.eql(other), false);
+      assert.equal(array.equal(array), true);
+      assert.equal(array.equal(other), false);
     });
   });
 
@@ -448,8 +448,8 @@ describe('Array', () => {
   describe('#inject', () => {
     it('should combine all elements of enum by applying a binary operation, specified by a block.', () => {
       var a = [1,2,3,4,5];
-      assert.equal(a.reduce((memo, obj) => memo + obj), 15);
-      assert.equal(a.reduce("", (memo, obj) => memo + obj), "12345");
+      assert.equal(a.inject((memo, obj) => memo + obj), 15);
+      assert.equal(a.inject("", (memo, obj) => memo + obj), "12345");
     });
   });
 
@@ -557,24 +557,50 @@ describe('Array', () => {
 
     it('should return maximum n elements as an array.', () => {
       var a = ["cat", "apple", "banana"];
-      assert.equal(a.minBy(2, (x) => x.length), ["cat", "apple"]);
+      assert.deepEqual(a.minBy(2, (x) => x.length), ["cat", "apple"]);
     });
   });
 
   describe('#minmax', () => {
-    //
+    it('should return two element array which contains the minimum and the maximum value in self.', () => {
+      var a = [6,-1,3,9,-5];
+      assert.deepEqual(a.minmax(), [-5,9]);
+
+      var words = ["cat", "apple", "banana"];
+      assert.deepEqual(words.minmaxBy((a, b) => b.length - a.length), ["cat", "banana"]);
+    });
   });
 
   describe('#minmax_by', () => {
-    //
+    it('should return a two element array containing the objects in enum that ' +
+        'correspond to the minimum and the maximum values respectively from the given block.', () => {
+      var words = ["cat", "apple", "banana"];
+      assert.deepEqual(words.minmaxBy((w) => w.length), ["cat", "banana"]);
+    });
   });
 
   describe('#none', () => {
-    //
+    it('should return true if the block never returns true for all elements.', () => {
+      var words = ["ant", "bear", "cat"];
+      assert.equal(words.none((w) => w.length == 5), true);
+      assert.equal(words.none((w) => w.length >= 4), false);
+
+      assert.equal([].none(), true);
+      assert.equal([null].none(), true);
+      assert.equal([null, true].none(), false);
+    });
   });
 
   describe('#one', () => {
-    //
+    it('should return true if the block return true exactly once.', () => {
+      var words = ["ant", "bear", "cat"];
+      assert.equal(words.one((w) => w.length == 4), true);
+      assert.equal(words.one((w) => w.length > 4), false);
+      assert.equal(words.one((w) => w.length < 4), false);
+
+      assert.equal([null, true, 99].one(), false);
+      assert.equal([null, true, false].one(), true);
+    });
   });
 
   describe.skip('#pack', () => {
@@ -582,7 +608,11 @@ describe('Array', () => {
   });
 
   describe('#partition', () => {
-    //
+    it('should return two arrays, the first containing the elements of enum ' +
+        'for which the given block evaluates to true, the second containing the rest.', () => {
+      var a = [1,2,3,4,5,6];
+      assert.deepEqual(a.partition((x) => x % 2 == 0), [[2,4,6], [1,3,5]]);
+    });
   });
 
   describe.skip('#permutation', () => {
@@ -631,7 +661,11 @@ describe('Array', () => {
   });
 
   describe('#reduce', () => {
-    //
+    it('should combine all elements of enum by applying a binary operation, specified by a block.', () => {
+      var a = [1,2,3,4,5];
+      assert.equal(a.reduce((memo, obj) => memo + obj), 15);
+      assert.equal(a.reduce("", (memo, obj) => memo + obj), "12345");
+    });
   });
 
   describe('#reject', () => {
@@ -700,7 +734,10 @@ describe('Array', () => {
   });
 
   describe('#select', () => {
-    //
+    it('should return an array containing all elements of self for which the given block returns a true value.', () => {
+      var a = [1,2,3,4,5];
+      assert.deepEqual(a.select((x) => x % 2 == 0), [2, 4]);
+    });
   });
 
   describe('#shift', () => {
