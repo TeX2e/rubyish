@@ -724,10 +724,10 @@ describe('Array', () => {
   describe('#rotate', () => {
     it('should return a new array by rotating self.', () => {
       var a = ["a", "b", "c"];
-      assert.equal(a.rotate(), ["b", "c", "a"]);
-      assert.equal(a, ["a", "b", "c"]);
-      assert.equal(a.rotate(2), ["c", "a", "b"]);
-      assert.equal(a.rotate(-1), ["c", "a", "b"]);
+      assert.deepEqual(a.rotate(), ["b", "c", "a"]);
+      assert.deepEqual(a, ["a", "b", "c"]);
+      assert.deepEqual(a.rotate(2), ["c", "a", "b"]);
+      assert.deepEqual(a.rotate(-1), ["c", "a", "b"]);
     });
   });
 
