@@ -293,7 +293,8 @@ describe('Array', () => {
     it('should iterates the given block for each element with an arbitrary object given,' +
         'and return the initiallly given object.', () => {
       var a = [1,2,3];
-      assert.equal(a.eachWithObject("", (item, memo) => item + memo), "123");
+      assert.deepEqual(a.eachWithObject([], (item, memo) => memo.push(item * item)), [1,4,9]);
+      assert.equal(a.eachWithObject(1, (item, memo) => memo += item), 1);
     });
   });
 
@@ -662,11 +663,12 @@ describe('Array', () => {
     });
   });
 
-  describe('#reduce', () => {
+  describe('#reduce (#rubyReduce)', () => {
     it('should combine all elements of enum by applying a binary operation, specified by a block.', () => {
       var a = [1,2,3,4,5];
-      assert.equal(a.reduce((memo, obj) => memo + obj), 15);
-      assert.equal(a.reduce("", (memo, obj) => memo + obj), "12345");
+      assert.equal(a.rubyReduce((memo, obj) => memo + obj), 15);
+      assert.equal(a.rubyReduce(100, (memo, obj) => memo + obj), 115);
+      assert.equal(a.rubyReduce("", (memo, obj) => memo + obj), "12345");
     });
   });
 
