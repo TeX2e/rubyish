@@ -111,7 +111,7 @@ describe('Array', () => {
   describe('#collect_concat', () => {
     it('should return a new array with the concatenated results of running block once for every element in enum.', () => {
       assert.deepEqual([1,2,3,4].collectConcat((e) => [e, -e]), [1,-1, 2,-2, 3,-3, 4,-4]);
-      assert.deepEqual([[1,2],[3,4]].collectConcat((e) => e.push(100)), [1,2,100,3,4,100]);
+      assert.deepEqual([[1,2],[3,4]].collectConcat((e) => e.concat([100])), [1,2,100,3,4,100]);
     });
   });
 
@@ -390,6 +390,7 @@ describe('Array', () => {
   describe('#flat_map', () => {
     it('should return a new array with the concatenated results of running block once for every element in enum.', () => {
       assert.deepEqual([1,2,3,4].flatMap((e) => [e, -e]), [1,-1, 2,-2, 3,-3, 4,-4]);
+      assert.deepEqual([[1,2],[3,4]].flatMap((e) => e.concat([100])), [1,2,100,3,4,100]);
       assert.deepEqual([[1,2],[3,4]].flatMap((e) => e.push(100)), [1,2,100,3,4,100]);
     });
   });
