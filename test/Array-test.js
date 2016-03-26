@@ -285,7 +285,7 @@ describe('Array', () => {
       a.eachWithIndex(function (item, index) {
         result += item + index + ",";
       });
-      assert.equal(result, "a0,b1,c2");
+      assert.equal(result, "a0,b1,c2,");
     });
   });
 
