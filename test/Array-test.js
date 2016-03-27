@@ -80,11 +80,11 @@ describe('Array', () => {
     });
   });
 
-  describe.skip('#chunk', () => {
+  describe('#chunk', () => {
     //
   });
 
-  describe.skip('#chunk_while', () => {
+  describe('#chunk_while', () => {
     //
   });
 
