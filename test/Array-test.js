@@ -531,8 +531,8 @@ describe('Array', () => {
   describe('#menber', () => {
     it('should return true if any menber of enum equals obj. Equality is tested using ===.', () => {
       var a = ["a", "b", "c"];
-      assert.equal(a.include("b"), true);
-      assert.equal(a.include("z"), false);
+      assert.equal(a.menber("b"), true);
+      assert.equal(a.menber("z"), false);
     });
   });
 
@@ -570,7 +570,8 @@ describe('Array', () => {
       assert.deepEqual(a.minmax(), [-5,9]);
 
       var words = ["cat", "apple", "banana"];
-      assert.deepEqual(words.minmaxBy((a, b) => b.length - a.length), ["cat", "banana"]);
+      assert.deepEqual(words.minmax(), ["apple", "cat"]);
+      assert.deepEqual(words.minmax((a, b) => a.length - b.length), ["cat", "banana"]);
     });
   });
 
