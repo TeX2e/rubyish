@@ -675,7 +675,7 @@ describe('Array', () => {
   describe('#reject', () => {
     it('should return a new array containing the items in self for which the given block is not true.', () => {
       var scores = [97, 42, 75];
-      assert.deepEqual(a.reject((score) => score < 80), [97]);
+      assert.deepEqual(scores.reject((score) => score < 80), [97]);
     });
   });
 
@@ -784,9 +784,9 @@ describe('Array', () => {
 
     it('is special cases.', () => {
       var a = ["a", "b", "c", "d", "e"];
-      assert.equal(e.rubySlice(5), null);
-      assert.equal(e.rubySlice(6, 1), null);
-      assert.deepEqual(e.rubySlice(5, 1), []);
+      assert.equal(a.rubySlice(5), null);
+      assert.equal(a.rubySlice(6, 1), null);
+      assert.deepEqual(a.rubySlice(5, 1), []);
     });
   });
 
