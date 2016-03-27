@@ -540,7 +540,7 @@ describe('Array', () => {
     it('should return the object in enum with minimum value.', () => {
       var a = ["cat", "apple", "banana"];
       assert.equal(a.min(), "apple");
-      assert.equal(a.min((a, b) => b.length - a.length), "cat");
+      assert.equal(a.min((a, b) => a.length - b.length), "cat");
 
       var b = [5,1,8,3,7];
       assert.equal(b.min(), 1);
