@@ -782,20 +782,13 @@ describe('Array', () => {
       assert.deepEqual(a.rubySlice(6, 10), null);
       assert.deepEqual(a.rubySlice(-3, 3), ["c", "d", "e"]);
     });
-
-    it('is special cases.', () => {
-      var a = ["a", "b", "c", "d", "e"];
-      assert.equal(a.rubySlice(5), null);
-      assert.equal(a.rubySlice(6, 1), null);
-      assert.deepEqual(a.rubySlice(5, 1), []);
-    });
   });
 
   describe('#slice_after', () => {
     it('should create an enum for each chunked elements. ' +
         'The ends of chunks are defined by pattern and the block.', () => {
       var lines = ["foo\n", "bar\\\n", "baz\n", "\n", "qux\n"];
-      assert.deepEqual(lines.sliceAfter(/[^\\]\n$/), [["foo\n"], ["bar\\\n", "baz\n"], ["\n"], ["qux\n"]]);
+      assert.deepEqual(lines.sliceAfter(/(^|[^\\])\n$/), [["foo\n"], ["bar\\\n", "baz\n"], ["\n"], ["qux\n"]]);
     });
   });
 
@@ -803,7 +796,7 @@ describe('Array', () => {
     it('should create an enum for each chunked elements.' +
         'The biginnings of chunks are defined by pattern and the block.', () => {
       var lines = ["foo\n", "bar\\\n", "baz\n", "\n", "qux\n"];
-      assert.deepEqual(lines.sliceBefore(/[^\\]\n$/), [["foo\n", "bar\\\n"], ["baz\n"], ["\n"], ["qux\n"]]);
+      assert.deepEqual(lines.sliceBefore(/(^|[^\\])\n$/), [["foo\n", "bar\\\n"], ["baz\n"], ["\n"], ["qux\n"]]);
     });
   });
 
