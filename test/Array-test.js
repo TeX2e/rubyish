@@ -419,8 +419,8 @@ describe('Array', () => {
   describe('#grep_v', () => {
     it('should invert the version of #grep.', () => {
       var a = ["foo", "bar", "baz"];
-      assert.deepEqual(a.grep(/ba./), ["foo"]);
-      assert.deepEqual(a.grep(/ba./, (m) => m.lenght), [3]);
+      assert.deepEqual(a.grepV(/ba./), ["foo"]);
+      assert.deepEqual(a.grepV(/ba./, (m) => m + "!"), ["foo!"]);
     });
   });
 
