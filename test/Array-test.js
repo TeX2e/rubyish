@@ -97,7 +97,15 @@ describe('Array', () => {
   });
 
   describe('#clone', () => {
-    //
+    it('should produce a shallow copy of obj.', () => {
+      var a = [1,2,3];
+      a.hoge = function () { return 123; };
+      var b = a.clone();
+      a[0] = 10;
+
+      assert.deepEqual(b, [1,2,3]);
+      assert.deepEqual(b.hoge, a.hoge);
+    });
   });
 
   describe('#collect', () => {
@@ -225,7 +233,15 @@ describe('Array', () => {
   });
 
   describe('#dup', () => {
-    //
+    it('should produce a shallow copy of obj.', () => {
+      var a = [1,2,3];
+      a.hoge = function () { return 123; };
+      var b = a.dup();
+      a[0] = 10;
+
+      assert.deepEqual(b, [1,2,3]);
+      assert.deepEqual(b.hoge, undefined);
+    });
   });
 
   describe('#each', () => {
@@ -464,8 +480,10 @@ describe('Array', () => {
     });
   });
 
-  describe.skip('#inspect', () => {
-    //
+  describe('#inspect', () => {
+    it('should same to be toString().', () => {
+      assert.equal([].inspect, [].toString);
+    });
   });
 
   describe('#join', () => {
@@ -608,7 +626,9 @@ describe('Array', () => {
   });
 
   describe.skip('#pack', () => {
-    //
+    it('should pack the contents of array into a binary sequence.', () => {
+      //
+    });
   });
 
   describe('#partition', () => {
@@ -625,8 +645,8 @@ describe('Array', () => {
       assert.deepEqual(a.permutation(1), [[1],[2],[3]]);
       assert.deepEqual(a.permutation(2), [[1,2],[1,3],[2,1],[2,3],[3,1],[3,2]]);
       assert.deepEqual(a.permutation(3), [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]);
-      assert.deepEqual(a.permutation(0), [[]]); // one permutation of lenght 0
-      assert.deepEqual(a.permutation(4), []); // no permutations of lenght 4
+      assert.deepEqual(a.permutation(0), [[]]); // one permutation of length 0
+      assert.deepEqual(a.permutation(4), []); // no permutations of length 4
     });
   });
 
@@ -681,11 +701,24 @@ describe('Array', () => {
   });
 
   describe.skip('#repeated_combination', () => {
-    //
+    it('should yield all repeated combinations of length n of elements.', () => {
+      var a = [1, 2, 3];
+      assert.deepEqual(a.repeatedCombination(1), [[1], [2], [3]]);
+      assert.deepEqual(a.repeatedCombination(2), [[1,1],[1,2],[1,3],[2,2],[2,3],[3,3]]);
+      assert.deepEqual(a.repeatedCombination(3), [[1,1,1],[1,1,2],[1,1,3],[1,2,2],[1,2,3],[1,3,3],[2,2,2],[2,2,3],[2,3,3],[3,3,3]]);
+      assert.deepEqual(a.repeatedCombination(4), [[1,1,1,1],[1,1,1,2],[1,1,1,3],[1,1,2,2],[1,1,2,3],[1,1,3,3],[1,2,2,2],[1,2,2,3],[1,2,3,3],[1,3,3,3],[2,2,2,2],[2,2,2,3],[2,2,3,3],[2,3,3,3],[3,3,3,3]]);
+      assert.deepEqual(a.repeatedCombination(0), [[]]);
+    });
   });
 
   describe.skip('#repeated_permutation', () => {
-    //
+    it('should yield all repeated permutations of length n of elements.', () => {
+      var a = [1, 2];
+      assert.deepEqual(a.repeatedPermutation(1), [[1], [2]]);
+      assert.deepEqual(a.repeatedPermutation(2), [[1,1],[1,2],[2,1],[2,2]]);
+      assert.deepEqual(a.repeatedPermutation(3), [[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]);
+      assert.deepEqual(a.repeatedPermutation(0), [[]]);
+    });
   });
 
   describe('#replace', () => {
@@ -843,15 +876,23 @@ describe('Array', () => {
   });
 
   describe('#to_a', () => {
-    //
+    it('should return self.', () => {
+      var a = [];
+      assert.equal(a.toArray(), a);
+    });
   });
 
   describe('#to_h', () => {
-    //
+    it('should return the result of interpreting ary as an array of [key, value] paris.', () => {
+      assert.deepEqual([["foo","bar"],[1,2]].toHash(), { foo: "bar", "1": 2 });
+    });
   });
 
   describe('#transpose', () => {
-    //
+    it('should transpose the rows and columns.', () => {
+      var a = [[1,2], [3,4], [5,6]];
+      assert.deepEqual(a.transpose(), [[1, 3, 5], [2, 4, 6]]);
+    });
   });
 
   describe('#uniq', () => {
