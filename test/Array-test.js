@@ -11,8 +11,9 @@ describe('Array', () => {
     });
 
     it('should return true if the predicater never returns false.', () => {
-      assert.equal(["ant", "bear", "cat"].all(word => word.length >= 3), true);
-      assert.equal(["ant", "bear", "cat"].all(word => word.length >= 4), false);
+      var a = ["ant", "bear", "cat"];
+      assert.equal(a.all(word => word.length >= 3), true);
+      assert.equal(a.all(word => word.length >= 4), false);
     });
   });
 
@@ -24,31 +25,33 @@ describe('Array', () => {
     });
 
     it('should return true if the predicater ever returns false.', () => {
-      assert.equal(["ant", "bear", "cat"].any(word => word.length >= 3), true);
-      assert.equal(["ant", "bear", "cat"].any(word => word.length >= 4), true);
+      var a = ["ant", "bear", "cat"];
+      assert.equal(a.any(word => word.length >= 3), true);
+      assert.equal(a.any(word => word.length >= 4), true);
     });
   });
 
   describe('#assoc', () => {
     it('should search through an array comparing obj with the first element of each contained array.', () => {
-      var s1 = [ "colors", "red", "blue", "green" ];
-      var s2 = [ "letters", "a", "b", "c" ];
+      var s1 = ["colors", "red", "blue", "green"];
+      var s2 = ["letters", "a", "b", "c"];
       var s3 = "foo";
-      assert.equal([s1, s2, s3].assoc("letters"), s2);
-      assert.equal([s1, s2, s3].assoc("foo"), null);
+      var s = [s1, s2, s3];
+      assert.equal(s.assoc("letters"), s2);
+      assert.equal(s.assoc("foo"), null);
     });
   });
 
   describe('#at', () => {
     it('should return the element at index.', () => {
-      var a = [ "a", "b", "c", "d", "e" ];
+      var a = ["a", "b", "c", "d", "e"];
       assert.equal(a.at(0), "a");
       assert.equal(a.at(-1), "e");
       assert.equal(a.at(-2), "d");
     });
 
     it('should return null if index is out of range', () => {
-      var a = [ "a", "b", "c", "d", "e" ];
+      var a = ["a", "b", "c", "d", "e"];
       assert.equal(a.at(5), null);
       assert.equal(a.at(-100), null);
     });
@@ -90,7 +93,7 @@ describe('Array', () => {
 
   describe('#clear', () => {
     it('should remove all element from self.', () => {
-      var a = [ "a", "b", "c", "d", "e" ];
+      var a = ["a", "b", "c", "d", "e"];
       assert.deepEqual(a.clear(), []);
       assert.deepEqual(a, []);
     });
@@ -110,9 +113,9 @@ describe('Array', () => {
 
   describe('#collect', () => {
     it('should create a new array containing the values returned by the block.', () => {
-      var a = [ "a", "b", "c", "d" ];
+      var a = ["a", "b", "c", "d"];
       assert.deepEqual(a.collect(x => x + "!"), ["a!", "b!", "c!", "d!"]);
-      assert.deepEqual(a, [ "a", "b", "c", "d" ]);
+      assert.deepEqual(a, ["a", "b", "c", "d"]);
     });
   });
 
