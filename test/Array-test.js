@@ -524,7 +524,7 @@ describe('Array', () => {
 
     it('should return maximum n elements as an array.', () => {
       var a = ["cat", "apple", "banana"];
-      assert.equal(a.maxBy(2, (x) => x.length), ["banana", "apple"]);
+      assert.deepEqual(a.maxBy(2, (x) => x.length), ["banana", "apple"]);
     });
   });
 
